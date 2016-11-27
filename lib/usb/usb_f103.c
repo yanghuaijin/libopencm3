@@ -17,12 +17,14 @@
  * along with this library.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <string.h>
 #include <libopencm3/cm3/common.h>
 #include <libopencm3/stm32/rcc.h>
 #include <libopencm3/stm32/tools.h>
 #include <libopencm3/stm32/usb.h>
 #include <libopencm3/usb/usbd.h>
 #include "usb_private.h"
+#include "usb_fx07_common.h"
 
 static usbd_device *stm32f103_usbd_init(void);
 static void stm32f103_set_address(usbd_device *usbd_dev, uint8_t addr);
