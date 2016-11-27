@@ -543,6 +543,12 @@ enum rcc_osc {
 	RCC_PLL, RCC_PLL2, RCC_PLL3, RCC_HSE, RCC_HSI, RCC_LSE, RCC_LSI
 };
 
+#define PLL RCC_PLL
+#define HSE RCC_HSE
+#define HSI RCC_HSI
+#define LSE RCC_LSE
+#define LSI RCC_LSI
+
 #define _REG_BIT(base, bit)		(((base) << 5) + (bit))
 
 /* V = value line F100
