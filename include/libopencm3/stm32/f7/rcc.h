@@ -596,6 +596,40 @@
 
 #define _REG_BIT(base, bit)		(((base) << 5) + (bit))
 
+struct rcc_clock_scale {
+	uint8_t pllm;
+	uint16_t plln;
+	uint8_t pllp;
+	uint8_t pllq;
+	uint8_t pllr;
+	uint32_t flash_config;
+	uint8_t hpre;
+	uint8_t ppre1;
+	uint8_t ppre2;
+	uint8_t power_save;
+	uint32_t ahb_frequency;
+	uint32_t apb1_frequency;
+	uint32_t apb2_frequency;
+};
+
+typedef struct rcc_clock_scale clock_scale_t;
+
+enum rcc_osc {
+	RCC_PLL,
+	RCC_PLLSAI,
+	RCC_PLLI2S,
+	RCC_HSE,
+	RCC_HSI,
+	RCC_LSE,
+	RCC_LSI
+};
+
+#define PLL RCC_PLL
+#define HSE RCC_HSE
+#define HSI RCC_HSI
+#define LSE RCC_LSE
+#define LSI RCC_LSI
+
 enum rcc_periph_clken {
 	/* AHB1 peripherals*/
 	RCC_GPIOA	= _REG_BIT(0x30, 0),
