@@ -86,6 +86,10 @@
 
 /* --- RCC_PLLCFGR values -------------------------------------------------- */
 
+/* PLLR: [30:28] */
+#define RCC_PLLCFGR_PLLR_SHIFT			28
+#define RCC_PLLCFGR_PLLR_MASK			0x7
+/* PLLQ: [27:24] */
 #define RCC_PLLCFGR_PLLQ_MASK			0xf
 #define RCC_PLLCFGR_PLLQ_SHIFT			24
 #define RCC_PLLCFGR_PLLSRC			(1 << 22)
@@ -159,6 +163,7 @@
 
 /* SWS: System clock switch status */
 #define RCC_CFGR_SWS_SHIFT			2
+#define RCC_CFGR_SWS_MASK			0x3
 #define RCC_CFGR_SWS_HSI			0x0
 #define RCC_CFGR_SWS_HSE			0x1
 #define RCC_CFGR_SWS_PLL			0x2
@@ -630,6 +635,9 @@ enum rcc_osc {
 #define LSE RCC_LSE
 #define LSI RCC_LSI
 
+
+#define _REG_BIT(base, bit)		(((base) << 5) + (bit))
+
 enum rcc_periph_clken {
 	/* AHB1 peripherals*/
 	RCC_GPIOA	= _REG_BIT(0x30, 0),
@@ -903,6 +911,34 @@ enum rcc_periph_rst {
 #include <libopencm3/stm32/common/rcc_common_all.h>
 
 BEGIN_DECLS
+
+void rcc_osc_ready_int_clear(enum rcc_osc osc);
+void rcc_osc_ready_int_enable(enum rcc_osc osc);
+void rcc_osc_ready_int_disable(enum rcc_osc osc);
+int rcc_osc_ready_int_flag(enum rcc_osc osc);
+void rcc_css_int_clear(void);
+int rcc_css_int_flag(void);
+void rcc_wait_for_sysclk_status(enum rcc_osc osc);
+void rcc_osc_on(enum rcc_osc osc);
+void rcc_osc_off(enum rcc_osc osc);
+void rcc_css_enable(void);
+void rcc_css_disable(void);
+void rcc_osc_bypass_enable(enum rcc_osc osc);
+void rcc_osc_bypass_disable(enum rcc_osc osc);
+void rcc_pllsai_config(uint16_t n, uint16_t p, uint16_t q, uint16_t r);
+void rcc_pllsai_postscalers(uint8_t q, uint8_t r);
+void rcc_set_sysclk_source(uint32_t clk);
+void rcc_set_pll_source(uint32_t pllsrc);
+void rcc_set_ppre2(uint32_t ppre2);
+void rcc_set_ppre1(uint32_t ppre1);
+void rcc_set_hpre(uint32_t hpre);
+void rcc_set_rtcpre(uint32_t rtcpre);
+void rcc_set_main_pll_hsi(uint32_t pllm, uint32_t plln, uint32_t pllp,
+			  uint32_t pllq, uint32_t pllr);
+void rcc_set_main_pll_hse(uint32_t pllm, uint32_t plln, uint32_t pllp,
+			  uint32_t pllq, uint32_t pllr);
+uint32_t rcc_system_clock_source(void);
+void rcc_clock_setup_hse_3v3(const struct rcc_clock_scale *clock);
 
 END_DECLS
 
