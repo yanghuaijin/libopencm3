@@ -40,7 +40,23 @@ TGT_CFLAGS	= -Os -g \
 
 ARFLAGS		= rcs
 
-OBJS		= gpio.o gpio_common_all.o gpio_common_f0234.o
+OBJS		= gpio.o gpio_common_all.o rcc.o rcc_common_all.o pwr.o flash.o
+
+OBJS            += gpio_common_all.o gpio_common_f0234.o pwr_common_all.o timer_common_all.o \
+#                   crc_common_all.o dac_common_all.o dma_common_f24.o \
+#                   iwdg_common_all.o i2c_common_all.o \
+#                   spi_common_all.o spi_common_l1f124.o rtc_common_l1f024.o \
+#                   timer_common_f0234.o timer_common_f24.o usart_common_all.o \
+		   flash_common_f24.o flash_common_f234.o \
+#		   hash_common_f24.o crypto_common_f24.o exti_common_all.o \
+		   rcc_common_all.o usart_common_f124.o
+
+OBJS            += usb.o usb_standard.o usb_control.o usb_fx07_common.o \
+		   usb_f107.o usb_f207.o usb_msc.o
+
+#OBJS		+= mac.o phy.o mac_stm32fxx7.o phy_ksz8051mll.o fmc.o
+
+#OBJS		+= ltdc.o 
 
 VPATH += ../../usb:../:../../cm3:../common
 VPATH += ../../ethernet
@@ -51,20 +67,20 @@ VPATH += ../../ethernet
 # TODO: This check and silent skip of build should be removed, when it will be
 # sure that first compatible toolchain (g-a-e 4.8 2014q3) will be sufficiently
 # penetrated in majority of user stations.
-define MISSING_CPU
-Your toolchain doesn't support -mcpu=cortex-m7.
-Please use gcc-arm-embedded 4.8 2014q3 or newer. Skipping this sub-library.
-endef
-
-ifneq ($(shell $(CC) --help=target | grep -q '\<cortex-m7\>'; echo $$?),0)
-  $(warning $(MISSING_CPU))
-
-all clean:
-	@true
-
-$(SRCLIBDIR)/$(LIBNAME).a:
-	@true
-
-else
+#define MISSING_CPU
+#Your toolchain doesn't support -mcpu=cortex-m7.
+#Please use gcc-arm-embedded 4.8 2014q3 or newer. Skipping this sub-library.
+#endef
+#
+#ifneq ($(shell $(CC) --help=target | grep -q '\<cortex-m7\>'; echo $$?),0)
+#  $(warning $(MISSING_CPU))
+#
+#all clean:
+#	@true
+#
+#$(SRCLIBDIR)/$(LIBNAME).a:
+#	@true
+#
+#else
   include ../../Makefile.include
-endif
+#endif
