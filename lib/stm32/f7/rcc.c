@@ -45,6 +45,8 @@
 
 /**@{*/
 
+static void SetSysClock(void);
+
 /* Set the default clock frequencies after reset. */
 uint32_t rcc_ahb_frequency = 16000000;
 uint32_t rcc_apb1_frequency = 16000000;
@@ -523,6 +525,97 @@ void rcc_clock_setup_hse_3v3(const struct rcc_clock_scale *clock)
 	Decrease_flash_latency(clock->flash_config);
 	/* Disable internal high-speed oscillator. */
 	rcc_osc_off(RCC_HSI);
+}
+
+void SystemInit(void)
+{
+  /* FPU settings ------------------------------------------------------------*/
+  SCB->CPACR |= ((3UL << 10*2)|(3UL << 11*2));  /* set CP10 and CP11 Full Access */
+
+  /* Reset the RCC clock configuration to the default reset state ------------*/
+  /* Set HSION bit */
+  RCC->CR |= (uint32_t)0x00000001;
+
+  /* Reset CFGR register */
+  RCC->CFGR = 0x00000000;
+
+  /* Reset HSEON, CSSON and PLLON bits */
+  RCC->CR &= (uint32_t)0xFEF6FFFF;
+
+  /* Reset PLLCFGR register */
+  RCC->PLLCFGR = 0x24003010;
+
+  /* Reset HSEBYP bit */
+  RCC->CR &= (uint32_t)0xFFFBFFFF;
+
+  /* Disable all interrupts */
+  RCC->CIR = 0x00000000;
+
+  SetSysClock();
+
+  /* Configure the Vector Table location add offset address ------------------*/
+#ifdef VECT_TAB_SRAM
+  SCB->VTOR = RAMDTCM_BASE | VECT_TAB_OFFSET; /* Vector Table Relocation in Internal SRAM */
+#else
+  SCB->VTOR = FLASH_MEM_INTERFACE_BASE | VECT_TAB_OFFSET; /* Vector Table Relocation in Internal FLASH */
+#endif
+}
+
+static void SetSysClock(void)
+{
+  __IO uint32_t StartUpCounter = 0, HSEStatus = 0;
+
+/******************************************************************************/
+/*            PLL (clocked by HSE) used as System clock source                */
+/******************************************************************************/
+
+  /* SYSCLK, HCLK, PCLK2 and PCLK1 configuration -----------*/
+  /* Enable HSE */
+	SET_BIT(RCC->CR, RCC_CR_HSEON);
+//  RCC->CR |= ((uint32_t)RCC_CR_HSEON);
+
+  /* Wait till HSE is ready and if Time out is reached exit */
+  do
+  {
+    HSEStatus = RCC->CR & RCC_CR_HSERDY;
+    StartUpCounter++;
+  } while((HSEStatus == 0) && (StartUpCounter != HSE_STARTUP_TIMEOUT));
+
+  if ((RCC->CR & RCC_CR_HSERDY) != RESET)
+  {
+    HSEStatus = (uint32_t)0x01;
+  }
+  else
+  {
+    HSEStatus = (uint32_t)0x00;
+  }
+
+  if (HSEStatus == (uint32_t)0x01)
+  {
+	  if(((uint32_t)(RCC->CFGR & RCC_CFGR_SWS)) != RCC_SYSCLKSOURCE_STATUS_PLLCLK)
+	  {
+	  CLEAR_BIT(RCC->CR, RCC_CR_PLLON);
+    /* Wait till PLL is ready */
+    while((RCC->CR & RCC_CR_PLLRDY) == 0)
+    {
+    }
+
+	RCC->PLLCFGR = ((RCC_PLLSOURCE_HSE) | (16)                   | \
+                            ((432) << RCC_PLLCFGR_PLLN_SHIFT)                      | \
+                            ((((RCC_PLLP_DIV2) >> 1) -1) << RCC_PLLCFGR_PLLP_SHIFT)          | \
+                            ((9) << RCC_PLLCFGR_PLLQ_SHIFT)                      | \
+                            ((7) << RCC_PLLCFGR_PLLR_SHIFT));
+	SET_BIT(RCC->CR, RCC_CR_PLLON);
+	    /* Wait till PLL is ready */
+    while((RCC->CR & RCC_CR_PLLRDY) == 0)
+    {
+    }
+}
+  }
+  else
+  { /* If HSE fails to start-up, the application will have wrong clock
+         configuration. User can add here some code to deal with this error */
+  }
 }
 
 /**@}*/
