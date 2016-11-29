@@ -20,7 +20,22 @@
 #ifndef LIBOPENCM3_CM3_MEMORYMAP_H
 #define LIBOPENCM3_CM3_MEMORYMAP_H
 
-/* --- ARM Cortex-M0, M3 and M4 specific definitions ----------------------- */
+/* --- ARM Cortex-M0, M3, M4 & M7 specific definitions ----------------------- */
+
+/* needed around efm32tg840f32.h:229. comparing the efm32lib definitions to the
+ * libopencm3 ones, "volatile" is all that's missing. */
+#ifdef __cplusplus
+  #define   __I     volatile             /*!< Defines 'read only' permissions */
+#else
+  #define   __I     volatile const       /*!< Defines 'read only' permissions */
+#endif
+#define     __O     volatile             /*!< Defines 'write only' permissions */
+#define     __IO    volatile             /*!< Defines 'read / write' permissions */
+
+/* following defines should be used for structure members */
+#define     __IM     volatile const      /*! Defines 'read only' structure member permissions */
+#define     __OM     volatile            /*! Defines 'write only' structure member permissions */
+#define     __IOM    volatile            /*! Defines 'read / write' structure member permissions */
 
 /* Private peripheral bus - Internal */
 #define PPBI_BASE                       (0xE0000000U)
@@ -36,6 +51,9 @@
 /* FPB: Flash Patch and Breakpoint unit */
 #define FPB_BASE                        (PPBI_BASE + 0x2000)
 #endif
+
+#define TPI_BASE						(PPBI_BASE + 0x40000UL)                            /*!< TPI Base Address */
+#define CoreDebug_BASE					(PPBI_BASE + 0xEDF0UL)                            /*!< Core Debug Base Address */
 
 /* PPBI_BASE + 0x3000 (0xE000 3000 - 0xE000 DFFF): Reserved */
 
