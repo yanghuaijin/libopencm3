@@ -50,264 +50,20 @@ uint32_t rcc_ahb_frequency = 16000000;
 uint32_t rcc_apb1_frequency = 16000000;
 uint32_t rcc_apb2_frequency = 16000000;
 
-//const struct rcc_clock_scale rcc_hse_8mhz_3v3[RCC_CLOCK_3V3_END] = {
-//	{ /* 48MHz */
-//		.pllm = 8,
-//		.plln = 96,
-//		.pllp = 2,
-//		.pllq = 2,
-//		.pllr = 0,
-//		.hpre = RCC_CFGR_HPRE_DIV_NONE,
-//		.ppre1 = RCC_CFGR_PPRE_DIV_4,
-//		.ppre2 = RCC_CFGR_PPRE_DIV_2,
-//		.power_save = 1,
-//		.flash_config = FLASH_ACR_ICE | FLASH_ACR_DCE |
-//				FLASH_ACR_LATENCY_3WS,
-//		.ahb_frequency  = 48000000,
-//		.apb1_frequency = 12000000,
-//		.apb2_frequency = 24000000,
-//	},
-//	{ /* 84MHz */
-//		.pllm = 8,
-//		.plln = 336,
-//		.pllp = 4,
-//		.pllq = 7,
-//		.pllr = 0,
-//		.hpre = RCC_CFGR_HPRE_DIV_NONE,
-//		.ppre1 = RCC_CFGR_PPRE_DIV_2,
-//		.ppre2 = RCC_CFGR_PPRE_DIV_NONE,
-//		.flash_config = FLASH_ACR_ICE | FLASH_ACR_DCE |
-//				FLASH_ACR_LATENCY_2WS,
-//		.ahb_frequency  = 84000000,
-//		.apb1_frequency = 42000000,
-//		.apb2_frequency = 84000000,
-//	},
-//	{ /* 120MHz */
-//		.pllm = 8,
-//		.plln = 240,
-//		.pllp = 2,
-//		.pllq = 5,
-//		.pllr = 0,
-//		.hpre = RCC_CFGR_HPRE_DIV_NONE,
-//		.ppre1 = RCC_CFGR_PPRE_DIV_4,
-//		.ppre2 = RCC_CFGR_PPRE_DIV_2,
-//		.power_save = 1,
-//		.flash_config = FLASH_ACR_ICE | FLASH_ACR_DCE |
-//				FLASH_ACR_LATENCY_3WS,
-//		.ahb_frequency  = 120000000,
-//		.apb1_frequency = 30000000,
-//		.apb2_frequency = 60000000,
-//	},
-//	{ /* 168MHz */
-//		.pllm = 8,
-//		.plln = 336,
-//		.pllp = 2,
-//		.pllq = 7,
-//		.pllr = 0,
-//		.hpre = RCC_CFGR_HPRE_DIV_NONE,
-//		.ppre1 = RCC_CFGR_PPRE_DIV_4,
-//		.ppre2 = RCC_CFGR_PPRE_DIV_2,
-//		.flash_config = FLASH_ACR_ICE | FLASH_ACR_DCE |
-//				FLASH_ACR_LATENCY_5WS,
-//		.ahb_frequency  = 168000000,
-//		.apb1_frequency = 42000000,
-//		.apb2_frequency = 84000000,
-//	},
-//};
-//
-//const struct rcc_clock_scale rcc_hse_12mhz_3v3[RCC_CLOCK_3V3_END] = {
-//	{ /* 48MHz */
-//		.pllm = 12,
-//		.plln = 96,
-//		.pllp = 2,
-//		.pllq = 2,
-//		.pllr = 0,
-//		.hpre = RCC_CFGR_HPRE_DIV_NONE,
-//		.ppre1 = RCC_CFGR_PPRE_DIV_4,
-//		.ppre2 = RCC_CFGR_PPRE_DIV_2,
-//		.power_save = 1,
-//		.flash_config = FLASH_ACR_ICE | FLASH_ACR_DCE |
-//				FLASH_ACR_LATENCY_3WS,
-//		.ahb_frequency  = 48000000,
-//		.apb1_frequency = 12000000,
-//		.apb2_frequency = 24000000,
-//	},
-//	{ /* 84MHz */
-//		.pllm = 12,
-//		.plln = 336,
-//		.pllp = 4,
-//		.pllq = 7,
-//		.pllr = 0,
-//		.hpre = RCC_CFGR_HPRE_DIV_NONE,
-//		.ppre1 = RCC_CFGR_PPRE_DIV_2,
-//		.ppre2 = RCC_CFGR_PPRE_DIV_NONE,
-//		.flash_config = FLASH_ACR_ICE | FLASH_ACR_DCE |
-//				FLASH_ACR_LATENCY_2WS,
-//		.ahb_frequency  = 84000000,
-//		.apb1_frequency = 42000000,
-//		.apb2_frequency = 84000000,
-//	},
-//	{ /* 120MHz */
-//		.pllm = 12,
-//		.plln = 240,
-//		.pllp = 2,
-//		.pllq = 5,
-//		.pllr = 0,
-//		.hpre = RCC_CFGR_HPRE_DIV_NONE,
-//		.ppre1 = RCC_CFGR_PPRE_DIV_4,
-//		.ppre2 = RCC_CFGR_PPRE_DIV_2,
-//		.power_save = 1,
-//		.flash_config = FLASH_ACR_ICE | FLASH_ACR_DCE |
-//				FLASH_ACR_LATENCY_3WS,
-//		.ahb_frequency  = 120000000,
-//		.apb1_frequency = 30000000,
-//		.apb2_frequency = 60000000,
-//	},
-//	{ /* 168MHz */
-//		.pllm = 12,
-//		.plln = 336,
-//		.pllp = 2,
-//		.pllq = 7,
-//		.pllr = 0,
-//		.hpre = RCC_CFGR_HPRE_DIV_NONE,
-//		.ppre1 = RCC_CFGR_PPRE_DIV_4,
-//		.ppre2 = RCC_CFGR_PPRE_DIV_2,
-//		.flash_config = FLASH_ACR_ICE | FLASH_ACR_DCE |
-//				FLASH_ACR_LATENCY_5WS,
-//		.ahb_frequency  = 168000000,
-//		.apb1_frequency = 42000000,
-//		.apb2_frequency = 84000000,
-//	},
-//};
-//
-//const struct rcc_clock_scale rcc_hse_16mhz_3v3[RCC_CLOCK_3V3_END] = {
-//	{ /* 48MHz */
-//		.pllm = 16,
-//		.plln = 96,
-//		.pllp = 2,
-//		.pllq = 2,
-//		.pllr = 0,
-//		.hpre = RCC_CFGR_HPRE_DIV_NONE,
-//		.ppre1 = RCC_CFGR_PPRE_DIV_4,
-//		.ppre2 = RCC_CFGR_PPRE_DIV_2,
-//		.power_save = 1,
-//		.flash_config = FLASH_ACR_ICE | FLASH_ACR_DCE |
-//				FLASH_ACR_LATENCY_3WS,
-//		.ahb_frequency  = 48000000,
-//		.apb1_frequency = 12000000,
-//		.apb2_frequency = 24000000,
-//	},
-//	{ /* 84MHz */
-//		.pllm = 16,
-//		.plln = 336,
-//		.pllp = 4,
-//		.pllq = 7,
-//		.pllr = 0,
-//		.hpre = RCC_CFGR_HPRE_DIV_NONE,
-//		.ppre1 = RCC_CFGR_PPRE_DIV_2,
-//		.ppre2 = RCC_CFGR_PPRE_DIV_NONE,
-//		.flash_config = FLASH_ACR_ICE | FLASH_ACR_DCE |
-//				FLASH_ACR_LATENCY_2WS,
-//		.ahb_frequency  = 84000000,
-//		.apb1_frequency = 42000000,
-//		.apb2_frequency = 84000000,
-//	},
-//	{ /* 120MHz */
-//		.pllm = 16,
-//		.plln = 240,
-//		.pllp = 2,
-//		.pllq = 5,
-//		.pllr = 0,
-//		.hpre = RCC_CFGR_HPRE_DIV_NONE,
-//		.ppre1 = RCC_CFGR_PPRE_DIV_4,
-//		.ppre2 = RCC_CFGR_PPRE_DIV_2,
-//		.power_save = 1,
-//		.flash_config = FLASH_ACR_ICE | FLASH_ACR_DCE |
-//				FLASH_ACR_LATENCY_3WS,
-//		.ahb_frequency  = 120000000,
-//		.apb1_frequency = 30000000,
-//		.apb2_frequency = 60000000,
-//	},
-//	{ /* 168MHz */
-//		.pllm = 16,
-//		.plln = 336,
-//		.pllp = 2,
-//		.pllq = 7,
-//		.pllr = 0,
-//		.hpre = RCC_CFGR_HPRE_DIV_NONE,
-//		.ppre1 = RCC_CFGR_PPRE_DIV_4,
-//		.ppre2 = RCC_CFGR_PPRE_DIV_2,
-//		.flash_config = FLASH_ACR_ICE | FLASH_ACR_DCE |
-//				FLASH_ACR_LATENCY_5WS,
-//		.ahb_frequency  = 168000000,
-//		.apb1_frequency = 42000000,
-//		.apb2_frequency = 84000000,
-//	},
-//};
-//
-//const struct rcc_clock_scale rcc_hse_25mhz_3v3[RCC_CLOCK_3V3_END] = {
-//	{ /* 48MHz */
-//		.pllm = 25,
-//		.plln = 96,
-//		.pllp = 2,
-//		.pllq = 2,
-//		.pllr = 0,
-//		.hpre = RCC_CFGR_HPRE_DIV_NONE,
-//		.ppre1 = RCC_CFGR_PPRE_DIV_4,
-//		.ppre2 = RCC_CFGR_PPRE_DIV_2,
-//		.power_save = 1,
-//		.flash_config = FLASH_ACR_ICE | FLASH_ACR_DCE |
-//				FLASH_ACR_LATENCY_3WS,
-//		.ahb_frequency  = 48000000,
-//		.apb1_frequency = 12000000,
-//		.apb2_frequency = 24000000,
-//	},
-//	{ /* 84MHz */
-//		.pllm = 25,
-//		.plln = 336,
-//		.pllp = 4,
-//		.pllq = 7,
-//		.pllr = 0,
-//		.hpre = RCC_CFGR_HPRE_DIV_NONE,
-//		.ppre1 = RCC_CFGR_PPRE_DIV_2,
-//		.ppre2 = RCC_CFGR_PPRE_DIV_NONE,
-//		.flash_config = FLASH_ACR_ICE | FLASH_ACR_DCE |
-//				FLASH_ACR_LATENCY_2WS,
-//		.ahb_frequency  = 84000000,
-//		.apb1_frequency = 42000000,
-//		.apb2_frequency = 84000000,
-//	},
-//	{ /* 120MHz */
-//		.pllm = 25,
-//		.plln = 240,
-//		.pllp = 2,
-//		.pllq = 5,
-//		.pllr = 0,
-//		.hpre = RCC_CFGR_HPRE_DIV_NONE,
-//		.ppre1 = RCC_CFGR_PPRE_DIV_4,
-//		.ppre2 = RCC_CFGR_PPRE_DIV_2,
-//		.power_save = 1,
-//		.flash_config = FLASH_ACR_ICE | FLASH_ACR_DCE |
-//				FLASH_ACR_LATENCY_3WS,
-//		.ahb_frequency  = 120000000,
-//		.apb1_frequency = 30000000,
-//		.apb2_frequency = 60000000,
-//	},
-//	{ /* 168MHz */
-//		.pllm = 25,
-//		.plln = 336,
-//		.pllp = 2,
-//		.pllq = 7,
-//		.pllr = 0,
-//		.hpre = RCC_CFGR_HPRE_DIV_NONE,
-//		.ppre1 = RCC_CFGR_PPRE_DIV_4,
-//		.ppre2 = RCC_CFGR_PPRE_DIV_2,
-//		.flash_config = FLASH_ACR_ICE | FLASH_ACR_DCE |
-//				FLASH_ACR_LATENCY_5WS,
-//		.ahb_frequency  = 168000000,
-//		.apb1_frequency = 42000000,
-//		.apb2_frequency = 84000000,
-//	},
+//const struct rcc_clock_scale rcc_hse_16mhz_3v3 = {
+//	.pllm = 16,
+//	.plln = 336,
+//	.pllp = 2,
+//	.pllq = 7,
+//	.pllr = 0,
+//	.hpre = RCC_CFGR_HPRE_DIV_NONE,
+//	.ppre1 = RCC_CFGR_PPRE_DIV_4,
+//	.ppre2 = RCC_CFGR_PPRE_DIV_2,
+//	.flash_config = FLASH_ACR_ICE | FLASH_ACR_DCE |
+//			FLASH_ACR_LATENCY_5WS,
+//	.ahb_frequency  = 168000000,
+//	.apb1_frequency = 42000000,
+//	.apb2_frequency = 84000000,
 //};
 
 void rcc_osc_ready_int_clear(enum rcc_osc osc)
@@ -717,16 +473,22 @@ void rcc_clock_setup_hse_3v3(const struct rcc_clock_scale *clock)
 	/* Select HSI as SYSCLK source. */
 	rcc_set_sysclk_source(RCC_CFGR_SW_HSI);
 
-	/* Enable external high-speed oscillator 8MHz. */
+	/* Enable external high-speed oscillator. */
 	rcc_osc_on(RCC_HSE);
 	rcc_wait_for_osc_ready(RCC_HSE);
 
-	/* Enable/disable high performance mode */
-	if (!clock->power_save) {
-		pwr_set_vos_scale(PWR_SCALE1);
-	} else {
-		pwr_set_vos_scale(PWR_SCALE2);
-	}
+	/* Enable the Over-drive to extend the clock frequency to 216 MHz */
+	PWR_OVERDRIVE_ENABLE();
+	while(!PWR_GET_FLAG(PWR_FLAG_ODRDY));
+	/* Enable the Over-drive switch */
+	PWR_OVERDRIVESWITCHING_ENABLE();
+	while(!PWR_GET_FLAG(PWR_FLAG_ODSWRDY));
+//	/* Enable/disable high performance mode */
+//	if (!clock->power_save) {
+//		pwr_set_vos_scale(PWR_SCALE1);
+//	} else {
+//		pwr_set_vos_scale(PWR_SCALE2);
+//	}
 
 	/*
 	 * Set prescalers for AHB, ADC, ABP1, ABP2.
@@ -743,8 +505,9 @@ void rcc_clock_setup_hse_3v3(const struct rcc_clock_scale *clock)
 	rcc_osc_on(RCC_PLL);
 	rcc_wait_for_osc_ready(RCC_PLL);
 
-	/* Configure flash settings. */
-	flash_set_ws(clock->flash_config);
+	Increase_flash_latency(clock->flash_config);
+//	/* Configure flash settings. */
+//	flash_set_ws(clock->flash_config);
 
 	/* Select PLL as SYSCLK source. */
 	rcc_set_sysclk_source(RCC_CFGR_SW_PLL);
@@ -757,6 +520,7 @@ void rcc_clock_setup_hse_3v3(const struct rcc_clock_scale *clock)
 	rcc_apb1_frequency = clock->apb1_frequency;
 	rcc_apb2_frequency = clock->apb2_frequency;
 
+	Decrease_flash_latency(clock->flash_config);
 	/* Disable internal high-speed oscillator. */
 	rcc_osc_off(RCC_HSI);
 }

@@ -44,20 +44,43 @@
 
 #define FLASH_ACR			MMIO32(FLASH_MEM_INTERFACE_BASE + 0x00)
 #define FLASH_KEYR			MMIO32(FLASH_MEM_INTERFACE_BASE + 0x04)
-#define FLASH_OPTKEYR			MMIO32(FLASH_MEM_INTERFACE_BASE + 0x08)
+#define FLASH_OPTKEYR		MMIO32(FLASH_MEM_INTERFACE_BASE + 0x08)
 #define FLASH_SR			MMIO32(FLASH_MEM_INTERFACE_BASE + 0x0C)
 #define FLASH_CR			MMIO32(FLASH_MEM_INTERFACE_BASE + 0x10)
+#define FLASH_OPTCR			MMIO32(FLASH_MEM_INTERFACE_BASE + 0x14)
+#define FLASH_OPTCR1		MMIO32(FLASH_MEM_INTERFACE_BASE + 0x18)
 
 /* --- FLASH_ACR values ---------------------------------------------------- */
 
-#define FLASH_ACR_LATENCY_0WS		0x00
-#define FLASH_ACR_LATENCY_1WS		0x01
-#define FLASH_ACR_LATENCY_2WS		0x02
-#define FLASH_ACR_LATENCY_3WS		0x03
-#define FLASH_ACR_LATENCY_4WS		0x04
-#define FLASH_ACR_LATENCY_5WS		0x05
-#define FLASH_ACR_LATENCY_6WS		0x06
-#define FLASH_ACR_LATENCY_7WS		0x07
+#define FLASH_ACR_LATENCY                    0x0000000FU
+#define FLASH_ACR_LATENCY_0WS                0x00000000U
+#define FLASH_ACR_LATENCY_1WS                0x00000001U
+#define FLASH_ACR_LATENCY_2WS                0x00000002U
+#define FLASH_ACR_LATENCY_3WS                0x00000003U
+#define FLASH_ACR_LATENCY_4WS                0x00000004U
+#define FLASH_ACR_LATENCY_5WS                0x00000005U
+#define FLASH_ACR_LATENCY_6WS                0x00000006U
+#define FLASH_ACR_LATENCY_7WS                0x00000007U
+#define FLASH_ACR_LATENCY_8WS                0x00000008U
+#define FLASH_ACR_LATENCY_9WS                0x00000009U
+#define FLASH_ACR_LATENCY_10WS               0x0000000AU
+#define FLASH_ACR_LATENCY_11WS               0x0000000BU
+#define FLASH_ACR_LATENCY_12WS               0x0000000CU
+#define FLASH_ACR_LATENCY_13WS               0x0000000DU
+#define FLASH_ACR_LATENCY_14WS               0x0000000EU
+#define FLASH_ACR_LATENCY_15WS               0x0000000FU
+#define FLASH_ACR_PRFTEN                     0x00000100U
+#define FLASH_ACR_ARTEN                      0x00000200U
+#define FLASH_ACR_ARTRST                     0x00000800U
+
+//#define FLASH_ACR_LATENCY_0WS		0x00
+//#define FLASH_ACR_LATENCY_1WS		0x01
+//#define FLASH_ACR_LATENCY_2WS		0x02
+//#define FLASH_ACR_LATENCY_3WS		0x03
+//#define FLASH_ACR_LATENCY_4WS		0x04
+//#define FLASH_ACR_LATENCY_5WS		0x05
+//#define FLASH_ACR_LATENCY_6WS		0x06
+//#define FLASH_ACR_LATENCY_7WS		0x07
 
 /* --- FLASH_SR values ----------------------------------------------------- */
 

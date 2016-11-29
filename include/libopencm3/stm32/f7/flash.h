@@ -36,5 +36,17 @@
 
 #include <libopencm3/stm32/common/flash_common_f24.h>
 
+/* Set the FLASH Latency. */
+#define FLASH_SET_LATENCY(__LATENCY__)	MODIFY_REG(FLASH_ACR, FLASH_ACR_LATENCY, (uint32_t)(__LATENCY__))
+/* Get the FLASH Latency. */
+#define FLASH_GET_LATENCY()				(READ_BIT((FLASH_ACR), FLASH_ACR_LATENCY))
+
+BEGIN_DECLS
+
+uint8_t Increase_flash_latency(uint32_t FLatency);
+uint8_t Decrease_flash_latency(uint32_t FLatency);
+
+END_DECLS
+
 #endif
 

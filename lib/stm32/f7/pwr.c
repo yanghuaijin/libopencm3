@@ -36,11 +36,11 @@
 
 #include <libopencm3/stm32/pwr.h>
 
-void pwr_set_vos_scale(enum pwr_vos_scale scale)
-{
-	if (scale == PWR_SCALE1) {
-		PWR_CR |= PWR_CR_VOS;
-	} else if (scale == PWR_SCALE2) {
-		PWR_CR &= PWR_CR_VOS;
-	}
-}
+//void pwr_set_vos_scale(enum pwr_vos_scale scale)
+//{
+//	if (scale == PWR_SCALE1) {
+//		PWR_CR1 |= PWR_CR1_VOS;
+//	} else if (scale == PWR_SCALE2) {
+//		PWR_CR1 &= PWR_CR1_VOS;
+//	}
+//}

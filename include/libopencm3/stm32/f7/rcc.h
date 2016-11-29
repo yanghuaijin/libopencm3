@@ -262,6 +262,7 @@
 #define RCC_APB1RSTR_SPDIFRXRST			(1 << 16)
 #define RCC_APB1RSTR_SPI3RST			(1 << 15)
 #define RCC_APB1RSTR_SPI2RST			(1 << 14)
+#define RCC_APB1RSTR_CAN3RST			(1 << 13)
 #define RCC_APB1RSTR_WWDGRST			(1 << 11)
 #define RCC_APB1RSTR_LPTIM1RST			(1 << 9)
 #define RCC_APB1RSTR_TIM14RST			(1 << 8)
@@ -276,6 +277,9 @@
 
 /* --- RCC_APB2RSTR values ------------------------------------------------- */
 
+#define RCC_APB2RSTR_MDIORST			(1 << 30)
+#define RCC_APB2RSTR_DFSDM1RST			(1 << 29)
+#define RCC_APB2RSTR_DSIRST				(1 << 27)
 #define RCC_APB2RSTR_LTDCRST			(1 << 26)
 #define RCC_APB2RSTR_SAI2RST			(1 << 23)
 #define RCC_APB2RSTR_SAI1RST			(1 << 22)
@@ -288,7 +292,8 @@
 #define RCC_APB2RSTR_SPI4RST			(1 << 13)
 #define RCC_APB2RSTR_SPI1RST			(1 << 12)
 #define RCC_APB2RSTR_SDMMC1RST			(1 << 11)
-#define RCC_APB2RSTR_ADCRST			(1 << 8)
+#define RCC_APB2RSTR_ADCRST				(1 << 8)
+#define RCC_APB2RSTR_SDMMC2RST			(1 << 7)
 #define RCC_APB2RSTR_USART6RST			(1 << 5)
 #define RCC_APB2RSTR_USART1RST			(1 << 4)
 #define RCC_APB2RSTR_TIM8RST			(1 << 1)
@@ -297,28 +302,28 @@
 /* --- RCC_AHB1ENR values ------------------------------------------------- */
 
 #define RCC_AHB1ENR_OTGHSULPIEN			(1 << 30)
-#define RCC_AHB1ENR_OTGHSEN			(1 << 29)
+#define RCC_AHB1ENR_OTGHSEN				(1 << 29)
 #define RCC_AHB1ENR_ETHMACPTPEN			(1 << 28)
 #define RCC_AHB1ENR_ETHMACRXEN			(1 << 27)
 #define RCC_AHB1ENR_ETHMACTXEN			(1 << 26)
 #define RCC_AHB1ENR_ETHMACEN			(1 << 25)
-#define RCC_AHB1ENR_DMA2DEN			(1 << 23)
-#define RCC_AHB1ENR_DMA2EN			(1 << 22)
-#define RCC_AHB1ENR_DMA1EN			(1 << 21)
+#define RCC_AHB1ENR_DMA2DEN				(1 << 23)
+#define RCC_AHB1ENR_DMA2EN				(1 << 22)
+#define RCC_AHB1ENR_DMA1EN				(1 << 21)
 #define RCC_AHB1ENR_DTCMRAMEN			(1 << 20)
 #define RCC_AHB1ENR_BKPSRAMEN			(1 << 18)
-#define RCC_AHB1ENR_CRCEN			(1 << 12)
-#define RCC_AHB1ENR_GPIOKEN			(1 << 10)
-#define RCC_AHB1ENR_GPIOJEN			(1 << 9)
-#define RCC_AHB1ENR_GPIOIEN			(1 << 8)
-#define RCC_AHB1ENR_GPIOHEN			(1 << 7)
-#define RCC_AHB1ENR_GPIOGEN			(1 << 6)
-#define RCC_AHB1ENR_GPIOFEN			(1 << 5)
-#define RCC_AHB1ENR_GPIOEEN			(1 << 4)
-#define RCC_AHB1ENR_GPIODEN			(1 << 3)
-#define RCC_AHB1ENR_GPIOCEN			(1 << 2)
-#define RCC_AHB1ENR_GPIOBEN			(1 << 1)
-#define RCC_AHB1ENR_GPIOAEN			(1 << 0)
+#define RCC_AHB1ENR_CRCEN				(1 << 12)
+#define RCC_AHB1ENR_GPIOKEN				(1 << 10)
+#define RCC_AHB1ENR_GPIOJEN				(1 << 9)
+#define RCC_AHB1ENR_GPIOIEN				(1 << 8)
+#define RCC_AHB1ENR_GPIOHEN				(1 << 7)
+#define RCC_AHB1ENR_GPIOGEN				(1 << 6)
+#define RCC_AHB1ENR_GPIOFEN				(1 << 5)
+#define RCC_AHB1ENR_GPIOEEN				(1 << 4)
+#define RCC_AHB1ENR_GPIODEN				(1 << 3)
+#define RCC_AHB1ENR_GPIOCEN				(1 << 2)
+#define RCC_AHB1ENR_GPIOBEN				(1 << 1)
+#define RCC_AHB1ENR_GPIOAEN				(1 << 0)
 
 /* --- RCC_AHB2ENR values ------------------------------------------------- */
 
@@ -326,6 +331,7 @@
 #define RCC_AHB2ENR_RNGEN			(1 << 6)
 #define RCC_AHB2ENR_HASHEN			(1 << 5)
 #define RCC_AHB2ENR_CRYPEN			(1 << 4)
+#define RCC_AHB2ENR_JPEGEN			(1 << 1)
 #define RCC_AHB2ENR_DCMIEN			(1 << 0)
 
 /* --- RCC_AHB3ENR values ------------------------------------------------- */
@@ -348,13 +354,15 @@
 #define RCC_APB1ENR_I2C1EN			(1 << 21)
 #define RCC_APB1ENR_UART5EN			(1 << 20)
 #define RCC_APB1ENR_UART4EN			(1 << 19)
-#define RCC_APB1ENR_USART3EN			(1 << 18)
-#define RCC_APB1ENR_USART2EN			(1 << 17)
-#define RCC_APB1ENR_SPIDIFRXEN			(1 << 16)
+#define RCC_APB1ENR_USART3EN		(1 << 18)
+#define RCC_APB1ENR_USART2EN		(1 << 17)
+#define RCC_APB1ENR_SPIDIFRXEN		(1 << 16)
 #define RCC_APB1ENR_SPI3EN			(1 << 15)
 #define RCC_APB1ENR_SPI2EN			(1 << 14)
+#define RCC_APB1ENR_CAN3EN			(1 << 13)
 #define RCC_APB1ENR_WWDGEN			(1 << 11)
-#define RCC_APB1ENR_LPTIM1EN			(1 << 9)
+#define RCC_APB1ENR_RTCAPBEN		(1 << 10)
+#define RCC_APB1ENR_LPTIM1EN		(1 << 9)
 #define RCC_APB1ENR_TIM14EN			(1 << 8)
 #define RCC_APB1ENR_TIM13EN			(1 << 7)
 #define RCC_APB1ENR_TIM12EN			(1 << 6)
@@ -367,6 +375,9 @@
 
 /* --- RCC_APB2ENR values ------------------------------------------------- */
 
+#define RCC_APB2ENR_MDIOEN			(1 << 30)
+#define RCC_APB2ENR_DFSDM1EN		(1 << 29)
+#define RCC_APB2ENR_DSIEN			(1 << 27)
 #define RCC_APB2ENR_LTDCEN			(1 << 26)
 #define RCC_APB2ENR_SAI2EN			(1 << 23)
 #define RCC_APB2ENR_SAI1EN			(1 << 22)
@@ -375,15 +386,16 @@
 #define RCC_APB2ENR_TIM11EN			(1 << 18)
 #define RCC_APB2ENR_TIM10EN			(1 << 17)
 #define RCC_APB2ENR_TIM9EN			(1 << 16)
-#define RCC_APB2ENR_SYSCFGEN			(1 << 14)
+#define RCC_APB2ENR_SYSCFGEN		(1 << 14)
 #define RCC_APB2ENR_SPI4EN			(1 << 13)
 #define RCC_APB2ENR_SPI1EN			(1 << 12)
-#define RCC_APB2ENR_SDMMC1EN			(1 << 11)
+#define RCC_APB2ENR_SDMMC1EN		(1 << 11)
 #define RCC_APB2ENR_ADC3EN			(1 << 10)
 #define RCC_APB2ENR_ADC2EN			(1 << 9)
 #define RCC_APB2ENR_ADC1EN			(1 << 8)
-#define RCC_APB2ENR_USART6EN			(1 << 5)
-#define RCC_APB2ENR_USART1EN			(1 << 4)
+#define RCC_APB2ENR_SDMMC2EN		(1 << 7)
+#define RCC_APB2ENR_USART6EN		(1 << 5)
+#define RCC_APB2ENR_USART1EN		(1 << 4)
 #define RCC_APB2ENR_TIM8EN			(1 << 1)
 #define RCC_APB2ENR_TIM1EN			(1 << 0)
 
@@ -423,6 +435,7 @@
 #define RCC_AHB2LPENR_RNGLPEN			(1 << 6)
 #define RCC_AHB2LPENR_HASHLPEN			(1 << 5)
 #define RCC_AHB2LPENR_CRYPLPEN			(1 << 4)
+#define RCC_AHB2LPENR_JPEGLPEN			(1 << 1)
 #define RCC_AHB2LPENR_DCMILPEN			(1 << 0)
 
 /* --- RCC_AHB3LPENR values ------------------------------------------------- */
@@ -450,7 +463,9 @@
 #define RCC_APB1LPENR_SPIDIFRXLPEN		(1 << 16)
 #define RCC_APB1LPENR_SPI3LPEN			(1 << 15)
 #define RCC_APB1LPENR_SPI2LPEN			(1 << 14)
+#define RCC_APB1LPENR_CAN3LPEN			(1 << 13)
 #define RCC_APB1LPENR_WWDGLPEN			(1 << 11)
+#define RCC_APB1LPENR_RTCAPBLPEN		(1 << 10)
 #define RCC_APB1LPENR_LPTIM1LPEN		(1 << 9)
 #define RCC_APB1LPENR_TIM14LPEN			(1 << 8)
 #define RCC_APB1LPENR_TIM13LPEN			(1 << 7)
@@ -464,6 +479,9 @@
 
 /* --- RCC_APB2LPENR values ------------------------------------------------- */
 
+#define RCC_APB2LPENR_MDIOLPEN			(1 << 30)
+#define RCC_APB2LPENR_DFSDM1LPEN		(1 << 29)
+#define RCC_APB2LPENR_DSILPEN			(1 << 27)
 #define RCC_APB2LPENR_LTDCLPEN			(1 << 26)
 #define RCC_APB2LPENR_SAI2LPEN			(1 << 23)
 #define RCC_APB2LPENR_SAI1LPEN			(1 << 22)
@@ -479,6 +497,7 @@
 #define RCC_APB2LPENR_ADC3LPEN			(1 << 10)
 #define RCC_APB2LPENR_ADC2LPEN			(1 << 9)
 #define RCC_APB2LPENR_ADC1LPEN			(1 << 8)
+#define RCC_APB2LPENR_SDMMC2LPEN		(1 << 7)
 #define RCC_APB2LPENR_USART6LPEN		(1 << 5)
 #define RCC_APB2LPENR_USART1LPEN		(1 << 4)
 #define RCC_APB2LPENR_TIM8LPEN			(1 << 1)
@@ -551,6 +570,8 @@
 
 /* --- RCC_DCKCFGR1 values -------------------------------------------------- */
 
+#define RCC_DCKCFGR1_ADFSDMSEL		(1 << 26)
+#define RCC_DCKCFGR1_DFSDMSEL		(1 << 25)
 #define RCC_DCKCFGR1_TIMPRE			(1<<24)
 #define RCC_DCKCFGR1_SAI2SEL_MASK		0x3
 #define RCC_DCKCFGR1_SAI2SEL_SHIFT		22
@@ -569,11 +590,13 @@
 
 /* --- RCC_DCKCFGR2 values -------------------------------------------------- */
 
+#define RCC_DCKCFGR2_DSISEL				(1 << 30)
+#define RCC_DCKCFGR2_SDMMC2SEL			(1 << 29)
 #define RCC_DCKCFGR2_SDMMCSEL			(1<<28)
 #define RCC_DCKCFGR2_CK48MSEL			(1<<27)
-#define RCC_DCKCFGR2_CECSEL			(1<<26)
+#define RCC_DCKCFGR2_CECSEL				(1<<26)
 #define RCC_DCKCFGR2_LPTIM1SEL_MASK		0x3
-#define RCC_DCKCFGR2_LPTIM1SEL_SHIFT		24
+#define RCC_DCKCFGR2_LPTIM1SEL_SHIFT	24
 #define RCC_DCKCFGR2_I2C4SEL_MASK		0x3
 #define RCC_DCKCFGR2_I2C4SEL_SHIFT		22
 #define RCC_DCKCFGR2_I2C3SEL_MASK		0x3
@@ -587,7 +610,7 @@
 #define RCC_DCKCFGR2_UART7SEL_MASK		0x3
 #define RCC_DCKCFGR2_UART7SEL_SHIFT		12
 #define RCC_DCKCFGR2_USART6SEL_MASK		0x3
-#define RCC_DCKCFGR2_USART6SEL_SHIFT		10
+#define RCC_DCKCFGR2_USART6SEL_SHIFT	10
 #define RCC_DCKCFGR2_UART5SEL_MASK		0x3
 #define RCC_DCKCFGR2_UART5SEL_SHIFT		8
 #define RCC_DCKCFGR2_UART4SEL_MASK		0x3

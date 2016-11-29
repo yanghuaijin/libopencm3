@@ -153,10 +153,26 @@ specific memorymap.h header before including this header file.*/
 /** @defgroup gpio_mode GPIO Pin Direction and Analog/Digital Mode
 @ingroup gpio_defines
 @{*/
-#define GPIO_MODE_INPUT			0x0
-#define GPIO_MODE_OUTPUT		0x1
-#define GPIO_MODE_AF			0x2
-#define GPIO_MODE_ANALOG		0x3
+#define  GPIO_MODE_INPUT                  ((uint32_t)0x00000000U)   /*!< Input Floating Mode                   */
+#define  GPIO_MODE_OUTPUT_PP              ((uint32_t)0x00000001U)   /*!< Output Push Pull Mode                 */
+#define  GPIO_MODE_OUTPUT_OD              ((uint32_t)0x00000011U)   /*!< Output Open Drain Mode                */
+#define  GPIO_MODE_AF_PP                  ((uint32_t)0x00000002U)   /*!< Alternate Function Push Pull Mode     */
+#define  GPIO_MODE_AF_OD                  ((uint32_t)0x00000012U)   /*!< Alternate Function Open Drain Mode    */
+
+#define  GPIO_MODE_ANALOG                 ((uint32_t)0x00000003U)   /*!< Analog Mode  */
+
+#define  GPIO_MODE_IT_RISING              ((uint32_t)0x10110000U)   /*!< External Interrupt Mode with Rising edge trigger detection          */
+#define  GPIO_MODE_IT_FALLING             ((uint32_t)0x10210000U)   /*!< External Interrupt Mode with Falling edge trigger detection         */
+#define  GPIO_MODE_IT_RISING_FALLING      ((uint32_t)0x10310000U)   /*!< External Interrupt Mode with Rising/Falling edge trigger detection  */
+
+#define  GPIO_MODE_EVT_RISING             ((uint32_t)0x10120000U)   /*!< External Event Mode with Rising edge trigger detection               */
+#define  GPIO_MODE_EVT_FALLING            ((uint32_t)0x10220000U)   /*!< External Event Mode with Falling edge trigger detection              */
+#define  GPIO_MODE_EVT_RISING_FALLING     ((uint32_t)0x10320000U)   /*!< External Event Mode with Rising/Falling edge trigger detection       */
+
+//#define GPIO_MODE_INPUT			0x0
+#define GPIO_MODE_OUTPUT		GPIO_MODE_OUTPUT_PP
+#define GPIO_MODE_AF			GPIO_MODE_AF_PP
+//#define GPIO_MODE_ANALOG		0x3
 /**@}*/
 
 /* --- GPIOx_OTYPER values ------------------------------------------------- */
@@ -177,10 +193,15 @@ specific memorymap.h header before including this header file.*/
 /** @defgroup gpio_speed GPIO Output Pin Speed
 @ingroup gpio_defines
 @{*/
-#define GPIO_OSPEED_2MHZ		0x0
-#define GPIO_OSPEED_25MHZ		0x1
-#define GPIO_OSPEED_50MHZ		0x2
-#define GPIO_OSPEED_100MHZ		0x3
+#define  GPIO_SPEED_FREQ_LOW         ((uint32_t)0x00000000U)  /*!< Low speed     */
+#define  GPIO_SPEED_FREQ_MEDIUM      ((uint32_t)0x00000001U)  /*!< Medium speed  */
+#define  GPIO_SPEED_FREQ_HIGH        ((uint32_t)0x00000002U)  /*!< Fast speed    */
+#define  GPIO_SPEED_FREQ_VERY_HIGH   ((uint32_t)0x00000003U)  /*!< High speed    */
+
+#define GPIO_OSPEED_2MHZ		GPIO_SPEED_FREQ_LOW
+#define GPIO_OSPEED_25MHZ		GPIO_SPEED_FREQ_MEDIUM
+#define GPIO_OSPEED_50MHZ		GPIO_SPEED_FREQ_HIGH
+#define GPIO_OSPEED_100MHZ		GPIO_SPEED_FREQ_VERY_HIGH
 /**@}*/
 
 /* --- GPIOx_PUPDR values -------------------------------------------------- */
@@ -190,9 +211,13 @@ specific memorymap.h header before including this header file.*/
 /** @defgroup gpio_pup GPIO Output Pin Pullup
 @ingroup gpio_defines
 @{*/
-#define GPIO_PUPD_NONE			0x0
-#define GPIO_PUPD_PULLUP		0x1
-#define GPIO_PUPD_PULLDOWN		0x2
+#define  GPIO_NOPULL        ((uint32_t)0x00000000U)   /*!< No Pull-up or Pull-down activation  */
+#define  GPIO_PULLUP        ((uint32_t)0x00000001U)   /*!< Pull-up activation                  */
+#define  GPIO_PULLDOWN      ((uint32_t)0x00000002U)   /*!< Pull-down activation                */
+
+#define GPIO_PUPD_NONE			GPIO_NOPULL
+#define GPIO_PUPD_PULLUP		GPIO_PULLUP
+#define GPIO_PUPD_PULLDOWN		GPIO_PULLDOWN
 /**@}*/
 
 /* --- GPIOx_IDR values ---------------------------------------------------- */

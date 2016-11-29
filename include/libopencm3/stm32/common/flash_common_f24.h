@@ -53,7 +53,7 @@
 #define FLASH_ACR_ICRST			(1 << 11)
 #define FLASH_ACR_DCE			(1 << 10)
 #define FLASH_ACR_ICE			(1 << 9)
-#define FLASH_ACR_PRFTEN		(1 << 8)
+//#define FLASH_ACR_PRFTEN		(1 << 8)
 
 /* --- FLASH_SR values ----------------------------------------------------- */
 

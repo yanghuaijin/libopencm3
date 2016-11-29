@@ -49,5 +49,40 @@
 
 #include <libopencm3/stm32/flash.h>
 
+uint8_t Increase_flash_latency(uint32_t FLatency)
+{
+	/* Increasing the CPU frequency */
+	if(FLatency > (FLASH_ACR & FLASH_ACR_LATENCY))
+	{
+		/* Program the new number of wait states to the LATENCY bits in the FLASH_ACR register */
+		FLASH_SET_LATENCY(FLatency);
+		/* Check that the new number of wait states is taken into account to access the Flash
+		    memory by reading the FLASH_ACR register */
+		 if((FLASH_ACR & FLASH_ACR_LATENCY) != FLatency)
+			 return 0;
+		 else
+			 return 1;
+	}
+	return 1;
+}
+
+uint8_t Decrease_flash_latency(uint32_t FLatency)
+{
+	/* Decreasing the number of wait states because of lower CPU frequency */
+	if(FLatency < (FLASH_ACR & FLASH_ACR_LATENCY))
+	{
+		/* Program the new number of wait states to the LATENCY bits in the FLASH_ACR register */
+		FLASH_SET_LATENCY(FLatency);
+
+		/* Check that the new number of wait states is taken into account to access the Flash
+			memory by reading the FLASH_ACR register */
+		if((FLASH_ACR & FLASH_ACR_LATENCY) != FLatency)
+			return 0;
+		else
+			return 1;
+	}
+	return 1;
+}
+
 /**@}*/
 
