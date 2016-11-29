@@ -22,6 +22,9 @@
 
 /* --- ARM Cortex-M0, M3, M4 & M7 specific definitions ----------------------- */
 
+#define  TICK_INT_PRIORITY				((uint32_t)0x0FU) /*!< tick interrupt priority */
+#define __NVIC_PRIO_BITS				3U
+
 /* needed around efm32tg840f32.h:229. comparing the efm32lib definitions to the
  * libopencm3 ones, "volatile" is all that's missing. */
 #ifdef __cplusplus

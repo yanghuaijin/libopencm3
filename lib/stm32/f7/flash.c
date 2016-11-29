@@ -55,7 +55,7 @@ uint8_t Increase_flash_latency(uint32_t FLatency)
 	if(FLatency > (FLASH_ACR & FLASH_ACR_LATENCY))
 	{
 		/* Program the new number of wait states to the LATENCY bits in the FLASH_ACR register */
-		FLASH_SET_LATENCY(FLatency);
+		__HAL_FLASH_SET_LATENCY(FLatency);
 		/* Check that the new number of wait states is taken into account to access the Flash
 		    memory by reading the FLASH_ACR register */
 		 if((FLASH_ACR & FLASH_ACR_LATENCY) != FLatency)
@@ -72,7 +72,7 @@ uint8_t Decrease_flash_latency(uint32_t FLatency)
 	if(FLatency < (FLASH_ACR & FLASH_ACR_LATENCY))
 	{
 		/* Program the new number of wait states to the LATENCY bits in the FLASH_ACR register */
-		FLASH_SET_LATENCY(FLatency);
+		__HAL_FLASH_SET_LATENCY(FLatency);
 
 		/* Check that the new number of wait states is taken into account to access the Flash
 			memory by reading the FLASH_ACR register */

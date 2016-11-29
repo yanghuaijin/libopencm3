@@ -393,8 +393,28 @@ typedef struct
   __IO uint32_t DCKCFGR2;      /*!< RCC Dedicated Clocks configuration register 2,               Address offset: 0x90 */
 
 } RCC_TypeDef;
-
 #define RCC                 ((RCC_TypeDef *) RCC_BASE)
+
+typedef struct
+{
+  __IO uint32_t ACR;      /*!< FLASH access control register,     Address offset: 0x00 */
+  __IO uint32_t KEYR;     /*!< FLASH key register,                Address offset: 0x04 */
+  __IO uint32_t OPTKEYR;  /*!< FLASH option key register,         Address offset: 0x08 */
+  __IO uint32_t SR;       /*!< FLASH status register,             Address offset: 0x0C */
+  __IO uint32_t CR;       /*!< FLASH control register,            Address offset: 0x10 */
+  __IO uint32_t OPTCR;    /*!< FLASH option control register ,    Address offset: 0x14 */
+  __IO uint32_t OPTCR1;   /*!< FLASH option control register 1 ,  Address offset: 0x18 */
+} FLASH_TypeDef;
+#define FLASH               ((FLASH_TypeDef *) FLASH_R_BASE)
+
+typedef struct
+{
+  __IO uint32_t CR1;   /*!< PWR power control register 1,        Address offset: 0x00 */
+  __IO uint32_t CSR1;  /*!< PWR power control/status register 2, Address offset: 0x04 */
+  __IO uint32_t CR2;   /*!< PWR power control register 2,        Address offset: 0x08 */
+  __IO uint32_t CSR2;  /*!< PWR power control/status register 2, Address offset: 0x0C */
+} PWR_TypeDef;
+#define PWR                 ((PWR_TypeDef *) PWR_BASE)
 
 typedef enum
 {
@@ -414,6 +434,8 @@ typedef enum
   ERROR = 0,
   SUCCESS = !ERROR
 } ErrorStatus;
+
+#define UNUSED(x)			  ((void)(x))
 
 #define SET_BIT(REG, BIT)     ((REG) |= (BIT))
 

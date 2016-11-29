@@ -73,15 +73,6 @@
 #define FLASH_ACR_ARTEN                      0x00000200U
 #define FLASH_ACR_ARTRST                     0x00000800U
 
-//#define FLASH_ACR_LATENCY_0WS		0x00
-//#define FLASH_ACR_LATENCY_1WS		0x01
-//#define FLASH_ACR_LATENCY_2WS		0x02
-//#define FLASH_ACR_LATENCY_3WS		0x03
-//#define FLASH_ACR_LATENCY_4WS		0x04
-//#define FLASH_ACR_LATENCY_5WS		0x05
-//#define FLASH_ACR_LATENCY_6WS		0x06
-//#define FLASH_ACR_LATENCY_7WS		0x07
-
 /* --- FLASH_SR values ----------------------------------------------------- */
 
 /* --- FLASH_CR values ----------------------------------------------------- */

@@ -36,10 +36,27 @@
 
 #include <libopencm3/stm32/common/flash_common_f24.h>
 
+#define FLASH_LATENCY_0                FLASH_ACR_LATENCY_0WS   /*!< FLASH Zero Latency cycle      */
+#define FLASH_LATENCY_1                FLASH_ACR_LATENCY_1WS   /*!< FLASH One Latency cycle       */
+#define FLASH_LATENCY_2                FLASH_ACR_LATENCY_2WS   /*!< FLASH Two Latency cycles      */
+#define FLASH_LATENCY_3                FLASH_ACR_LATENCY_3WS   /*!< FLASH Three Latency cycles    */
+#define FLASH_LATENCY_4                FLASH_ACR_LATENCY_4WS   /*!< FLASH Four Latency cycles     */
+#define FLASH_LATENCY_5                FLASH_ACR_LATENCY_5WS   /*!< FLASH Five Latency cycles     */
+#define FLASH_LATENCY_6                FLASH_ACR_LATENCY_6WS   /*!< FLASH Six Latency cycles      */
+#define FLASH_LATENCY_7                FLASH_ACR_LATENCY_7WS   /*!< FLASH Seven Latency cycles    */
+#define FLASH_LATENCY_8                FLASH_ACR_LATENCY_8WS   /*!< FLASH Eight Latency cycles    */
+#define FLASH_LATENCY_9                FLASH_ACR_LATENCY_9WS   /*!< FLASH Nine Latency cycles     */
+#define FLASH_LATENCY_10               FLASH_ACR_LATENCY_10WS  /*!< FLASH Ten Latency cycles      */
+#define FLASH_LATENCY_11               FLASH_ACR_LATENCY_11WS  /*!< FLASH Eleven Latency cycles   */
+#define FLASH_LATENCY_12               FLASH_ACR_LATENCY_12WS  /*!< FLASH Twelve Latency cycles   */
+#define FLASH_LATENCY_13               FLASH_ACR_LATENCY_13WS  /*!< FLASH Thirteen Latency cycles */
+#define FLASH_LATENCY_14               FLASH_ACR_LATENCY_14WS  /*!< FLASH Fourteen Latency cycles */
+#define FLASH_LATENCY_15               FLASH_ACR_LATENCY_15WS  /*!< FLASH Fifteen Latency cycles  */
+
 /* Set the FLASH Latency. */
-#define FLASH_SET_LATENCY(__LATENCY__)	MODIFY_REG(FLASH_ACR, FLASH_ACR_LATENCY, (uint32_t)(__LATENCY__))
+#define __HAL_FLASH_SET_LATENCY(__LATENCY__)	MODIFY_REG(FLASH_ACR, FLASH_ACR_LATENCY, (uint32_t)(__LATENCY__))
 /* Get the FLASH Latency. */
-#define FLASH_GET_LATENCY()				(READ_BIT((FLASH_ACR), FLASH_ACR_LATENCY))
+#define __HAL_FLASH_GET_LATENCY()				(READ_BIT((FLASH_ACR), FLASH_ACR_LATENCY))
 
 BEGIN_DECLS
 

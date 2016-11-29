@@ -36,7 +36,8 @@
 #ifndef LIBOPENCM3_PWR_H
 #define LIBOPENCM3_PWR_H
 
-#include <libopencm3/stm32/common/pwr_common_all.h>
+#include <libopencmsis/core_cm3.h>
+//#include <libopencm3/stm32/common/pwr_common_all.h>
 
 #define PWR_CR1			MMIO32(POWER_CONTROL_BASE + 0x00)
 #define PWR_CSR1		MMIO32(POWER_CONTROL_BASE + 0x04)
@@ -47,175 +48,6 @@
  * This file extends the common STM32 version with definitions only
  * applicable to the STM32F7 series of devices.
  */
-
-///* --- PWR_CR1 values ------------------------------------------------------- */
-//
-///* Bits [31:20]: Reserved */
-//
-///* UDEN[1:0]: Under-drive enable in stop mode */
-//#define PWR_CR1_UDEN				(1 << 18)
-//
-///* ODSWEN: Over-drive switching enabled */
-//#define PWR_CR1_ODSWEN				(1 << 17)
-//
-///* ODEN: Over-drive enable */
-//#define PWR_CR1_ODEN				(1 << 16)
-//
-///* VOS[1:0]: Regulator voltage scaling output selection */
-//#define PWR_CR1_VOS					(1 << 14)
-//
-///* ADCDC1: */
-//#define PWR_CR1_ADCDC1				(1 << 13)
-//
-///* Bits 12: Reserved */
-//
-///* MRUDS: Main regulator in deepsleep under-drive mode */
-//#define PWR_CR1_MRUDS				(1 << 11)
-//
-///* LPUDS: Low-power regulator in deepsleep under-drive mode */
-//#define PWR_CR1_LPUDS				(1 << 10)
-//
-///* FPDS: Flash power-down in Stop mode */
-//#define PWR_CR1_FPDS				(1 << 9)
-//
-///* DBP: Disable backup domain write protection */
-//#define PWR_CR1_DBP					(1 << 8)
-//
-///* PLS[2:0]: PVD level selection */
-//#define PWR_CR1_PLS					(7 << 5)
-//
-///* PVDE: Power voltage detector enable */
-//#define PWR_CR1_PVDE				(1 << 4)
-//
-///* CSBF: Clear standby flag */
-//#define PWR_CR1_CSBF				(1 << 3)
-//
-///* Bits 2: Reserved */
-//
-///* PDDS: Power-down deepsleep */
-//#define PWR_CR1_PDDS				(1 << 1)
-//
-///* LPDS: Low-power deepsleep */
-//#define PWR_CR1_LPDS				(1 << 0)
-//
-///* --- PWR_CSR1 values ------------------------------------------------------ */
-//
-///* Bits [31:20]: Reserved */
-//
-///* UDRDY[1:0]: Under-drive ready flag */
-//#define PWR_CSR1_UDRDY				(3 << 18)
-//
-///* ODSWRDY: Over-drive mode switching ready */
-//#define PWR_CSR1_ODSWRDY			(1 << 17)
-//
-///* ODRDY: Over-drive mode ready */
-//#define PWR_CSR1_ODRDY				(1 << 16)
-//
-///* VOSRDY: Regulator voltage scaling output selection ready bit */
-//#define PWR_CSR1_VOSRDY				(1 << 14)
-//
-///* Bits [13:10]: Reserved */
-//
-///* BRE: Backup regulator enable */
-//#define PWR_CSR1_BRE				(1 << 9)
-//
-///* Bits [8:4]: Reserved */
-//
-///* BRR: Backup regulator ready */
-//#define PWR_CSR1_BRR				(1 << 3)
-//
-///* PVDO: PVD output */
-//#define PWR_CSR1_PVDO				(1 << 2)
-//
-///* SBF: Standby flag */
-//#define PWR_CSR1_SBF				(1 << 1)
-//
-///* WUIF: Wakeup internal flag */
-//#define PWR_CSR1_WUIF				(1 << 0)
-//
-///* --- PWR_CR2 values ------------------------------------------------------- */
-//
-///* Bits [31:14]: Reserved */
-//
-///* WUPP6: Wakeup pin polarity bit for PI11 */
-//#define PWR_CR2_WUPP6				(1 << 13)
-//
-///* WUPP5: Wakeup pin polarity bit for PI8 */
-//#define PWR_CR2_WUPP5				(1 << 12)
-//
-///* WUPP4: Wakeup pin polarity bit for PC13 */
-//#define PWR_CR2_WUPP4				(1 << 11)
-//
-///* WUPP3: Wakeup pin polarity bit for PC1 */
-//#define PWR_CR2_WUPP3				(1 << 10)
-//
-///* WUPP2: Wakeup pin polarity bit for PA2 */
-//#define PWR_CR2_WUPP2				(1 << 9)
-//
-///* WUPP1: Wakeup pin polarity bit for PA0 */
-//#define PWR_CR2_WUPP1				(1 << 8)
-//
-///* Bits [7:6] Reserved, always read as 0 */
-//
-///* CWUPF6: Clear Wakeup Pin flag for PI11 */
-//#define PWR_CR2_CWUPF6				(1 << 5)
-//
-///* CWUPF5: Clear Wakeup Pin flag for PI8 */
-//#define PWR_CR2_CWUPF5				(1 << 4)
-//
-///* CWUPF4: Clear Wakeup Pin flag for PC13 */
-//#define PWR_CR2_CWUPF4				(1 << 3)
-//
-///* CWUPF3: Clear Wakeup Pin flag for PC1 */
-//#define PWR_CR2_CWUPF3				(1 << 2)
-//
-///* CWUPF2: Clear Wakeup Pin flag for PA2 */
-//#define PWR_CR2_CWUPF2				(1 << 1)
-//
-///* CWUPF1: Clear Wakeup Pin flag for PA0 */
-//#define PWR_CR2_CWUPF1				(1 << 0)
-//
-///* --- PWR_CSR2 values ------------------------------------------------------ */
-//
-///* Bits [31:14]: Reserved */
-//
-///* EWUP6: Enable Wakeup pin for PI11 */
-//#define PWR_CSR2_EWUP6				(1 << 13)
-//
-///* EWUP5: Enable Wakeup pin for PI8 */
-//#define PWR_CSR2_EWUP5				(1 << 12)
-//
-///* EWUP4: Enable Wakeup pin for PC13 */
-//#define PWR_CSR2_EWUP4				(1 << 11)
-//
-///* EWUP3: Enable Wakeup pin for PC1 */
-//#define PWR_CSR2_EWUP3				(1 << 10)
-//
-///* EWUP2: Enable Wakeup pin for PA2 */
-//#define PWR_CSR2_EWUP2				(1 << 9)
-//
-///* EWUP1: Enable Wakeup pin for PA0 */
-//#define PWR_CSR2_EWUP1				(1 << 8)
-//
-///* Bits [7:6] Reserved, always read as 0 */
-//
-///* WUPF6: Wakeup Pin flag for PI11 */
-//#define PWR_CSR2_WUPF6				(1 << 5)
-//
-///* WUPF5: Wakeup Pin flag for PI8 */
-//#define PWR_CSR2_WUPF5				(1 << 4)
-//
-///* WUPF4: Wakeup Pin flag for PC13 */
-//#define PWR_CSR2_WUPF4				(1 << 3)
-//
-///* WUPF3: Wakeup Pin flag for PC1 */
-//#define PWR_CSR2_WUPF3				(1 << 2)
-//
-///* WUPF2: Wakeup Pin flag for PA2 */
-//#define PWR_CSR2_WUPF2				(1 << 1)
-//
-///* WUPF1: Wakeup Pin flag for PA0 */
-//#define PWR_CSR2_WUPF1				(1 << 0)
 
 /********************  Bit definition for PWR_CR1 register  ********************/
 #define  PWR_CR1_LPDS                         0x00000001U     /*!< Low-Power Deepsleep                 */
@@ -347,16 +179,203 @@
 /* Clear the WakeUp pins flags. */
 #define PWR_CLEAR_WAKEUP_FLAG(__WUFLAG__) (PWR_CR2 |=  (__WUFLAG__))
 
-/* --- Function prototypes ------------------------------------------------- */
+/** @brief  macros configure the main internal regulator output voltage.
+  * @param  __REGULATOR__: specifies the regulator output voltage to achieve
+  *         a tradeoff between performance and power consumption when the device does
+  *         not operate at the maximum frequency (refer to the datasheets for more details).
+  *          This parameter can be one of the following values:
+  *            @arg PWR_REGULATOR_VOLTAGE_SCALE1: Regulator voltage output Scale 1 mode
+  *            @arg PWR_REGULATOR_VOLTAGE_SCALE2: Regulator voltage output Scale 2 mode
+  *            @arg PWR_REGULATOR_VOLTAGE_SCALE3: Regulator voltage output Scale 3 mode
+  * @retval None
+  */
+#define __HAL_PWR_VOLTAGESCALING_CONFIG(__REGULATOR__) do {                                                     \
+                                                            __IO uint32_t tmpreg;                               \
+                                                            MODIFY_REG(PWR->CR1, PWR_CR1_VOS, (__REGULATOR__)); \
+                                                            /* Delay after an RCC peripheral clock enabling */  \
+                                                            tmpreg = READ_BIT(PWR->CR1, PWR_CR1_VOS);           \
+                                                            UNUSED(tmpreg);                                     \
+				                                                	} while(0)
 
-//enum pwr_vos_scale {
-//	PWR_SCALE1,
-//	PWR_SCALE2,
-//};
+/** @brief  Check PWR flag is set or not.
+  * @param  __FLAG__: specifies the flag to check.
+  *           This parameter can be one of the following values:
+  *            @arg PWR_FLAG_WU: Wake Up flag. This flag indicates that a wakeup event
+  *                  was received on the internal wakeup line in standby mode (RTC alarm (Alarm A or Alarm B),
+  *                  RTC Tamper event, RTC TimeStamp event or RTC Wakeup)).
+  *            @arg PWR_FLAG_SB: StandBy flag. This flag indicates that the system was
+  *                  resumed from StandBy mode.
+  *            @arg PWR_FLAG_PVDO: PVD Output. This flag is valid only if PVD is enabled
+  *                  by the HAL_PWR_EnablePVD() function. The PVD is stopped by Standby mode
+  *                  For this reason, this bit is equal to 0 after Standby or reset
+  *                  until the PVDE bit is set.
+  *            @arg PWR_FLAG_BRR: Backup regulator ready flag. This bit is not reset
+  *                  when the device wakes up from Standby mode or by a system reset
+  *                  or power reset.
+  *            @arg PWR_FLAG_VOSRDY: This flag indicates that the Regulator voltage
+  *                 scaling output selection is ready.
+  * @retval The new state of __FLAG__ (TRUE or FALSE).
+  */
+#define __HAL_PWR_GET_FLAG(__FLAG__) ((PWR->CSR1 & (__FLAG__)) == (__FLAG__))
+
+/** @brief  Clear the PWR's pending flags.
+  * @param  __FLAG__: specifies the flag to clear.
+  *          This parameter can be one of the following values:
+  *            @arg PWR_FLAG_SB: StandBy flag
+  */
+#define __HAL_PWR_CLEAR_FLAG(__FLAG__) (PWR->CR1 |=  (__FLAG__) << 2)
+
+/**
+  * @brief Enable the PVD Exti Line 16.
+  * @retval None.
+  */
+#define __HAL_PWR_PVD_EXTI_ENABLE_IT()   (EXTI->IMR |= (PWR_EXTI_LINE_PVD))
+
+/**
+  * @brief Disable the PVD EXTI Line 16.
+  * @retval None.
+  */
+#define __HAL_PWR_PVD_EXTI_DISABLE_IT()  (EXTI->IMR &= ~(PWR_EXTI_LINE_PVD))
+
+/**
+  * @brief Enable event on PVD Exti Line 16.
+  * @retval None.
+  */
+#define __HAL_PWR_PVD_EXTI_ENABLE_EVENT()   (EXTI->EMR |= (PWR_EXTI_LINE_PVD))
+
+/**
+  * @brief Disable event on PVD Exti Line 16.
+  * @retval None.
+  */
+#define __HAL_PWR_PVD_EXTI_DISABLE_EVENT()  (EXTI->EMR &= ~(PWR_EXTI_LINE_PVD))
+
+/**
+  * @brief Enable the PVD Extended Interrupt Rising Trigger.
+  * @retval None.
+  */
+#define __HAL_PWR_PVD_EXTI_ENABLE_RISING_EDGE()   SET_BIT(EXTI->RTSR, PWR_EXTI_LINE_PVD)
+
+/**
+  * @brief Disable the PVD Extended Interrupt Rising Trigger.
+  * @retval None.
+  */
+#define __HAL_PWR_PVD_EXTI_DISABLE_RISING_EDGE()  CLEAR_BIT(EXTI->RTSR, PWR_EXTI_LINE_PVD)
+
+/**
+  * @brief Enable the PVD Extended Interrupt Falling Trigger.
+  * @retval None.
+  */
+#define __HAL_PWR_PVD_EXTI_ENABLE_FALLING_EDGE()   SET_BIT(EXTI->FTSR, PWR_EXTI_LINE_PVD)
+
+
+/**
+  * @brief Disable the PVD Extended Interrupt Falling Trigger.
+  * @retval None.
+  */
+#define __HAL_PWR_PVD_EXTI_DISABLE_FALLING_EDGE()  CLEAR_BIT(EXTI->FTSR, PWR_EXTI_LINE_PVD)
+
+
+/**
+  * @brief  PVD EXTI line configuration: set rising & falling edge trigger.
+  * @retval None.
+  */
+#define __HAL_PWR_PVD_EXTI_ENABLE_RISING_FALLING_EDGE()   __HAL_PWR_PVD_EXTI_ENABLE_RISING_EDGE();__HAL_PWR_PVD_EXTI_ENABLE_FALLING_EDGE();
+
+/**
+  * @brief Disable the PVD Extended Interrupt Rising & Falling Trigger.
+  * @retval None.
+  */
+#define __HAL_PWR_PVD_EXTI_DISABLE_RISING_FALLING_EDGE()  __HAL_PWR_PVD_EXTI_DISABLE_RISING_EDGE();__HAL_PWR_PVD_EXTI_DISABLE_FALLING_EDGE();
+
+/**
+  * @brief checks whether the specified PVD Exti interrupt flag is set or not.
+  * @retval EXTI PVD Line Status.
+  */
+#define __HAL_PWR_PVD_EXTI_GET_FLAG()  (EXTI->PR & (PWR_EXTI_LINE_PVD))
+
+/**
+  * @brief Clear the PVD Exti flag.
+  * @retval None.
+  */
+#define __HAL_PWR_PVD_EXTI_CLEAR_FLAG()  (EXTI->PR = (PWR_EXTI_LINE_PVD))
+
+/**
+  * @brief  Generates a Software interrupt on PVD EXTI line.
+  * @retval None
+  */
+#define __HAL_PWR_PVD_EXTI_GENERATE_SWIT() (EXTI->SWIER |= (PWR_EXTI_LINE_PVD))
+
+/** @brief Macros to enable or disable the Over drive mode.
+  */
+#define __HAL_PWR_OVERDRIVE_ENABLE() (PWR->CR1 |= (uint32_t)PWR_CR1_ODEN)
+#define __HAL_PWR_OVERDRIVE_DISABLE() (PWR->CR1 &= (uint32_t)(~PWR_CR1_ODEN))
+
+/** @brief Macros to enable or disable the Over drive switching.
+  */
+#define __HAL_PWR_OVERDRIVESWITCHING_ENABLE() (PWR->CR1 |= (uint32_t)PWR_CR1_ODSWEN)
+#define __HAL_PWR_OVERDRIVESWITCHING_DISABLE() (PWR->CR1 &= (uint32_t)(~PWR_CR1_ODSWEN))
+
+/** @brief Macros to enable or disable the Under drive mode.
+  * @note  This mode is enabled only with STOP low power mode.
+  *        In this mode, the 1.2V domain is preserved in reduced leakage mode. This
+  *        mode is only available when the main regulator or the low power regulator
+  *        is in low voltage mode.
+  * @note  If the Under-drive mode was enabled, it is automatically disabled after
+  *        exiting Stop mode.
+  *        When the voltage regulator operates in Under-drive mode, an additional
+  *        startup delay is induced when waking up from Stop mode.
+  */
+#define __HAL_PWR_UNDERDRIVE_ENABLE() (PWR->CR1 |= (uint32_t)PWR_CR1_UDEN)
+#define __HAL_PWR_UNDERDRIVE_DISABLE() (PWR->CR1 &= (uint32_t)(~PWR_CR1_UDEN))
+
+/** @brief  Check PWR flag is set or not.
+  * @param  __FLAG__: specifies the flag to check.
+  *         This parameter can be one of the following values:
+  *            @arg PWR_FLAG_ODRDY: This flag indicates that the Over-drive mode
+  *                                 is ready
+  *            @arg PWR_FLAG_ODSWRDY: This flag indicates that the Over-drive mode
+  *                                   switching is ready
+  *            @arg PWR_FLAG_UDRDY: This flag indicates that the Under-drive mode
+  *                                 is enabled in Stop mode
+  * @retval The new state of __FLAG__ (TRUE or FALSE).
+  */
+#define __HAL_PWR_GET_ODRUDR_FLAG(__FLAG__) ((PWR->CSR1 & (__FLAG__)) == (__FLAG__))
+
+/** @brief Clear the Under-Drive Ready flag.
+  */
+#define __HAL_PWR_CLEAR_ODRUDR_FLAG() (PWR->CSR1 |= PWR_FLAG_UDRDY)
+
+/** @brief  Check Wake Up flag is set or not.
+  * @param  __WUFLAG__: specifies the Wake Up flag to check.
+  *          This parameter can be one of the following values:
+  *            @arg PWR_WAKEUP_PIN_FLAG1: Wakeup Pin Flag for PA0
+  *            @arg PWR_WAKEUP_PIN_FLAG2: Wakeup Pin Flag for PA2
+  *            @arg PWR_WAKEUP_PIN_FLAG3: Wakeup Pin Flag for PC1
+  *            @arg PWR_WAKEUP_PIN_FLAG4: Wakeup Pin Flag for PC13
+  *            @arg PWR_WAKEUP_PIN_FLAG5: Wakeup Pin Flag for PI8
+  *            @arg PWR_WAKEUP_PIN_FLAG6: Wakeup Pin Flag for PI11
+  */
+#define __HAL_PWR_GET_WAKEUP_FLAG(__WUFLAG__) (PWR->CSR2 & (__WUFLAG__))
+
+/** @brief  Clear the WakeUp pins flags.
+  * @param  __WUFLAG__: specifies the Wake Up pin flag to clear.
+  *          This parameter can be one of the following values:
+  *            @arg PWR_WAKEUP_PIN_FLAG1: Wakeup Pin Flag for PA0
+  *            @arg PWR_WAKEUP_PIN_FLAG2: Wakeup Pin Flag for PA2
+  *            @arg PWR_WAKEUP_PIN_FLAG3: Wakeup Pin Flag for PC1
+  *            @arg PWR_WAKEUP_PIN_FLAG4: Wakeup Pin Flag for PC13
+  *            @arg PWR_WAKEUP_PIN_FLAG5: Wakeup Pin Flag for PI8
+  *            @arg PWR_WAKEUP_PIN_FLAG6: Wakeup Pin Flag for PI11
+  */
+#define __HAL_PWR_CLEAR_WAKEUP_FLAG(__WUFLAG__) (PWR->CR2 |=  (__WUFLAG__))
+
+#include <libopencm3/stm32/f7/HAL_F7.h>
+
+/* --- Function prototypes ------------------------------------------------- */
 
 BEGIN_DECLS
 
-//void pwr_set_vos_scale(enum pwr_vos_scale scale);
+HAL_StatusTypeDef HAL_PWREx_EnableOverDrive(void);
 
 END_DECLS
 

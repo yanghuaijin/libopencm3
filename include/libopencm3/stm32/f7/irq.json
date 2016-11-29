@@ -93,6 +93,8 @@
         "dma2d",
         "sai2",
         "quadspi",
+        "lp_tim1",
+        "hdmi_cec",
         "i2c4_ev",
         "i2c4_er",
         "spdifrx"

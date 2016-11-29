@@ -16,6 +16,7 @@
 #include <libopencm3/cm3/systick.h>
 #include <libopencm3/cm3/nvic.h>
 #include <libopencm3/cm3/scb.h>
+//#include <libopencmsis/cmsis_armcc.h>
 
 /* needed by system_efm32.h:196, guessing */
 #define __INLINE inline
@@ -446,20 +447,266 @@ typedef struct {
 #define CoreDebug_DHCSR_C_DEBUGEN_Msk 0
 #define CoreDebug_DEMCR_TRCENA_Msk 0
 
+/**
+  \brief  Structure type to access the Nested Vectored Interrupt Controller (NVIC).
+ */
+typedef struct
+{
+  __IOM uint32_t ISER[8U];               /*!< Offset: 0x000 (R/W)  Interrupt Set Enable Register */
+        uint32_t RESERVED0[24U];
+  __IOM uint32_t ICER[8U];               /*!< Offset: 0x080 (R/W)  Interrupt Clear Enable Register */
+        uint32_t RSERVED1[24U];
+  __IOM uint32_t ISPR[8U];               /*!< Offset: 0x100 (R/W)  Interrupt Set Pending Register */
+        uint32_t RESERVED2[24U];
+  __IOM uint32_t ICPR[8U];               /*!< Offset: 0x180 (R/W)  Interrupt Clear Pending Register */
+        uint32_t RESERVED3[24U];
+  __IOM uint32_t IABR[8U];               /*!< Offset: 0x200 (R/W)  Interrupt Active bit Register */
+        uint32_t RESERVED4[56U];
+  __IOM uint8_t  IP[240U];               /*!< Offset: 0x300 (R/W)  Interrupt Priority Register (8Bit wide) */
+        uint32_t RESERVED5[644U];
+  __OM  uint32_t STIR;                   /*!< Offset: 0xE00 ( /W)  Software Trigger Interrupt Register */
+}  NVIC_Type;
+
+#define NVIC                ((NVIC_Type      *)     NVIC_BASE     )   /*!< NVIC configuration struct */
+/**
+  \brief   Set Priority Grouping
+  \details Sets the priority grouping field using the required unlock sequence.
+           The parameter PriorityGroup is assigned to the field SCB->AIRCR [10:8] PRIGROUP field.
+           Only values from 0..7 are used.
+           In case of a conflict between priority grouping and available
+           priority bits (__NVIC_PRIO_BITS), the smallest possible priority group is set.
+  \param [in]      PriorityGroup  Priority grouping field.
+ */
+__STATIC_INLINE void NVIC_SetPriorityGrouping(uint32_t PriorityGroup)
+{
+  uint32_t reg_value;
+  uint32_t PriorityGroupTmp = (PriorityGroup & (uint32_t)0x07UL);             /* only values 0..7 are used          */
+
+  reg_value  =  SCB->AIRCR;                                                   /* read old register configuration    */
+  reg_value &= ~((uint32_t)(SCB_AIRCR_VECTKEY_Msk | SCB_AIRCR_PRIGROUP_Msk)); /* clear bits to change               */
+  reg_value  =  (reg_value                                   |
+                ((uint32_t)0x5FAUL << SCB_AIRCR_VECTKEY_Pos) |
+                (PriorityGroupTmp << 8U)                      );              /* Insert write key and priorty group */
+  SCB->AIRCR =  reg_value;
+}
+
+
+/**
+  \brief   Get Priority Grouping
+  \details Reads the priority grouping field from the NVIC Interrupt Controller.
+  \return                Priority grouping field (SCB->AIRCR [10:8] PRIGROUP field).
+ */
+__STATIC_INLINE uint32_t NVIC_GetPriorityGrouping(void)
+{
+  return ((uint32_t)((SCB->AIRCR & SCB_AIRCR_PRIGROUP_Msk) >> SCB_AIRCR_PRIGROUP_Pos));
+}
+
+
+/**
+  \brief   Enable External Interrupt
+  \details Enables a device-specific interrupt in the NVIC interrupt controller.
+  \param [in]      IRQn  External interrupt number. Value cannot be negative.
+ */
+__STATIC_INLINE void NVIC_EnableIRQ(IRQn_Type IRQn)
+{
+  NVIC->ISER[(((uint32_t)(int32_t)IRQn) >> 5UL)] = (uint32_t)(1UL << (((uint32_t)(int32_t)IRQn) & 0x1FUL));
+}
+
+
+/**
+  \brief   Disable External Interrupt
+  \details Disables a device-specific interrupt in the NVIC interrupt controller.
+  \param [in]      IRQn  External interrupt number. Value cannot be negative.
+ */
+__STATIC_INLINE void NVIC_DisableIRQ(IRQn_Type IRQn)
+{
+  NVIC->ICER[(((uint32_t)(int32_t)IRQn) >> 5UL)] = (uint32_t)(1UL << (((uint32_t)(int32_t)IRQn) & 0x1FUL));
+}
+
+
+/**
+  \brief   Get Pending Interrupt
+  \details Reads the pending register in the NVIC and returns the pending bit for the specified interrupt.
+  \param [in]      IRQn  Interrupt number.
+  \return             0  Interrupt status is not pending.
+  \return             1  Interrupt status is pending.
+ */
+__STATIC_INLINE uint32_t NVIC_GetPendingIRQ(IRQn_Type IRQn)
+{
+  return((uint32_t)(((NVIC->ISPR[(((uint32_t)(int32_t)IRQn) >> 5UL)] & (1UL << (((uint32_t)(int32_t)IRQn) & 0x1FUL))) != 0UL) ? 1UL : 0UL));
+}
+
+
+/**
+  \brief   Set Pending Interrupt
+  \details Sets the pending bit of an external interrupt.
+  \param [in]      IRQn  Interrupt number. Value cannot be negative.
+ */
+__STATIC_INLINE void NVIC_SetPendingIRQ(IRQn_Type IRQn)
+{
+  NVIC->ISPR[(((uint32_t)(int32_t)IRQn) >> 5UL)] = (uint32_t)(1UL << (((uint32_t)(int32_t)IRQn) & 0x1FUL));
+}
+
+
+/**
+  \brief   Clear Pending Interrupt
+  \details Clears the pending bit of an external interrupt.
+  \param [in]      IRQn  External interrupt number. Value cannot be negative.
+ */
+__STATIC_INLINE void NVIC_ClearPendingIRQ(IRQn_Type IRQn)
+{
+  NVIC->ICPR[(((uint32_t)(int32_t)IRQn) >> 5UL)] = (uint32_t)(1UL << (((uint32_t)(int32_t)IRQn) & 0x1FUL));
+}
+
+
+/**
+  \brief   Get Active Interrupt
+  \details Reads the active register in NVIC and returns the active bit.
+  \param [in]      IRQn  Interrupt number.
+  \return             0  Interrupt status is not active.
+  \return             1  Interrupt status is active.
+ */
+__STATIC_INLINE uint32_t NVIC_GetActive(IRQn_Type IRQn)
+{
+  return((uint32_t)(((NVIC->IABR[(((uint32_t)(int32_t)IRQn) >> 5UL)] & (1UL << (((uint32_t)(int32_t)IRQn) & 0x1FUL))) != 0UL) ? 1UL : 0UL));
+}
+
+/**
+  \brief   Set Interrupt Priority
+  \details Sets the priority of an interrupt.
+  \note    The priority cannot be set for every core interrupt.
+  \param [in]      IRQn  Interrupt number.
+  \param [in]  priority  Priority to set.
+ */
+__STATIC_INLINE void NVIC_SetPriority(IRQn_Type IRQn, uint32_t priority)
+{
+  if ((int32_t)(IRQn) < 0)
+  {
+    SCB->SHPR[(((uint32_t)(int32_t)IRQn) & 0xFUL)-4UL] = (uint8_t)((priority << (8U - __NVIC_PRIO_BITS)) & (uint32_t)0xFFUL);
+  }
+  else
+  {
+    NVIC->IP[((uint32_t)(int32_t)IRQn)]                = (uint8_t)((priority << (8U - __NVIC_PRIO_BITS)) & (uint32_t)0xFFUL);
+  }
+}
+
+/**
+  \brief   Get Interrupt Priority
+  \details Reads the priority of an interrupt.
+           The interrupt number can be positive to specify an external (device specific) interrupt,
+           or negative to specify an internal (core) interrupt.
+  \param [in]   IRQn  Interrupt number.
+  \return             Interrupt Priority.
+                      Value is aligned automatically to the implemented priority bits of the microcontroller.
+ */
+__STATIC_INLINE uint32_t NVIC_GetPriority(IRQn_Type IRQn)
+{
+
+  if ((int32_t)(IRQn) < 0)
+  {
+    return(((uint32_t)SCB->SHPR[(((uint32_t)(int32_t)IRQn) & 0xFUL)-4UL] >> (8U - __NVIC_PRIO_BITS)));
+  }
+  else
+  {
+    return(((uint32_t)NVIC->IP[((uint32_t)(int32_t)IRQn)]                >> (8U - __NVIC_PRIO_BITS)));
+  }
+}
+
+/**
+  \brief   Encode Priority
+  \details Encodes the priority for an interrupt with the given priority group,
+           preemptive priority value, and subpriority value.
+           In case of a conflict between priority grouping and available
+           priority bits (__NVIC_PRIO_BITS), the smallest possible priority group is set.
+  \param [in]     PriorityGroup  Used priority group.
+  \param [in]   PreemptPriority  Preemptive priority value (starting from 0).
+  \param [in]       SubPriority  Subpriority value (starting from 0).
+  \return                        Encoded priority. Value can be used in the function \ref NVIC_SetPriority().
+ */
+__STATIC_INLINE uint32_t NVIC_EncodePriority (uint32_t PriorityGroup, uint32_t PreemptPriority, uint32_t SubPriority)
+{
+  uint32_t PriorityGroupTmp = (PriorityGroup & (uint32_t)0x07UL);   /* only values 0..7 are used          */
+  uint32_t PreemptPriorityBits;
+  uint32_t SubPriorityBits;
+
+  PreemptPriorityBits = ((7UL - PriorityGroupTmp) > (uint32_t)(__NVIC_PRIO_BITS)) ? (uint32_t)(__NVIC_PRIO_BITS) : (uint32_t)(7UL - PriorityGroupTmp);
+  SubPriorityBits     = ((PriorityGroupTmp + (uint32_t)(__NVIC_PRIO_BITS)) < (uint32_t)7UL) ? (uint32_t)0UL : (uint32_t)((PriorityGroupTmp - 7UL) + (uint32_t)(__NVIC_PRIO_BITS));
+
+  return (
+           ((PreemptPriority & (uint32_t)((1UL << (PreemptPriorityBits)) - 1UL)) << SubPriorityBits) |
+           ((SubPriority     & (uint32_t)((1UL << (SubPriorityBits    )) - 1UL)))
+         );
+}
+
+
+/**
+  \brief   Decode Priority
+  \details Decodes an interrupt priority value with a given priority group to
+           preemptive priority value and subpriority value.
+           In case of a conflict between priority grouping and available
+           priority bits (__NVIC_PRIO_BITS) the smallest possible priority group is set.
+  \param [in]         Priority   Priority value, which can be retrieved with the function \ref NVIC_GetPriority().
+  \param [in]     PriorityGroup  Used priority group.
+  \param [out] pPreemptPriority  Preemptive priority value (starting from 0).
+  \param [out]     pSubPriority  Subpriority value (starting from 0).
+ */
+__STATIC_INLINE void NVIC_DecodePriority (uint32_t Priority, uint32_t PriorityGroup, uint32_t* const pPreemptPriority, uint32_t* const pSubPriority)
+{
+  uint32_t PriorityGroupTmp = (PriorityGroup & (uint32_t)0x07UL);   /* only values 0..7 are used          */
+  uint32_t PreemptPriorityBits;
+  uint32_t SubPriorityBits;
+
+  PreemptPriorityBits = ((7UL - PriorityGroupTmp) > (uint32_t)(__NVIC_PRIO_BITS)) ? (uint32_t)(__NVIC_PRIO_BITS) : (uint32_t)(7UL - PriorityGroupTmp);
+  SubPriorityBits     = ((PriorityGroupTmp + (uint32_t)(__NVIC_PRIO_BITS)) < (uint32_t)7UL) ? (uint32_t)0UL : (uint32_t)((PriorityGroupTmp - 7UL) + (uint32_t)(__NVIC_PRIO_BITS));
+
+  *pPreemptPriority = (Priority >> SubPriorityBits) & (uint32_t)((1UL << (PreemptPriorityBits)) - 1UL);
+  *pSubPriority     = (Priority                   ) & (uint32_t)((1UL << (SubPriorityBits    )) - 1UL);
+}
+
+
+///**
+//  \brief   System Reset
+//  \details Initiates a system reset request to reset the MCU.
+// */
+//__STATIC_INLINE void NVIC_SystemReset(void)
+//{
+//  __DSB();                                                          /* Ensure all outstanding memory accesses included
+//                                                                       buffered write are completed before reset */
+//  SCB->AIRCR  = (uint32_t)((0x5FAUL << SCB_AIRCR_VECTKEY_Pos)    |
+//                           (SCB->AIRCR & SCB_AIRCR_PRIGROUP_Msk) |
+//                            SCB_AIRCR_SYSRESETREQ_Msk    );         /* Keep priority group unchanged */
+//  __DSB();                                                          /* Ensure completion of memory access */
+//
+//  for(;;)                                                           /* wait until reset */
+//  {
+//  }
+//}
+
+#define NVIC_PRIORITYGROUP_0         ((uint32_t)0x00000007U) /*!< 0 bits for pre-emption priority
+                                                                 4 bits for subpriority */
+#define NVIC_PRIORITYGROUP_1         ((uint32_t)0x00000006U) /*!< 1 bits for pre-emption priority
+                                                                 3 bits for subpriority */
+#define NVIC_PRIORITYGROUP_2         ((uint32_t)0x00000005U) /*!< 2 bits for pre-emption priority
+                                                                 2 bits for subpriority */
+#define NVIC_PRIORITYGROUP_3         ((uint32_t)0x00000004U) /*!< 3 bits for pre-emption priority
+                                                                 1 bits for subpriority */
+#define NVIC_PRIORITYGROUP_4         ((uint32_t)0x00000003U) /*!< 4 bits for pre-emption priority
+                                                                 0 bits for subpriority */
+
 /* stubs for efm32_dma */
 
-static inline void NVIC_ClearPendingIRQ(uint8_t irqn)
-{
-	nvic_clear_pending_irq(irqn);
-}
-static inline void NVIC_EnableIRQ(uint8_t irqn)
-{
-	nvic_enable_irq(irqn);
-}
-static inline void NVIC_DisableIRQ(uint8_t irqn)
-{
-	nvic_disable_irq(irqn);
-}
+//static inline void NVIC_ClearPendingIRQ(uint8_t irqn)
+//{
+//	nvic_clear_pending_irq(irqn);
+//}
+//static inline void NVIC_EnableIRQ(uint8_t irqn)
+//{
+//	nvic_enable_irq(irqn);
+//}
+//static inline void NVIC_DisableIRQ(uint8_t irqn)
+//{
+//	nvic_disable_irq(irqn);
+//}
 
 /* stubs for efm32_int */
 
@@ -522,20 +769,78 @@ typedef struct {
 } SysTick_TypeDef;
 #define SysTick ((SysTick_TypeDef *) SYS_TICK_BASE)
 
-static inline uint32_t SysTick_Config(uint32_t n_ticks)
+/* SysTick Control / Status Register Definitions */
+#define SysTick_CTRL_COUNTFLAG_Pos         16U                                            /*!< SysTick CTRL: COUNTFLAG Position */
+#define SysTick_CTRL_COUNTFLAG_Msk         (1UL << SysTick_CTRL_COUNTFLAG_Pos)            /*!< SysTick CTRL: COUNTFLAG Mask */
+
+#define SysTick_CTRL_CLKSOURCE_Pos          2U                                            /*!< SysTick CTRL: CLKSOURCE Position */
+#define SysTick_CTRL_CLKSOURCE_Msk         (1UL << SysTick_CTRL_CLKSOURCE_Pos)            /*!< SysTick CTRL: CLKSOURCE Mask */
+
+#define SysTick_CTRL_TICKINT_Pos            1U                                            /*!< SysTick CTRL: TICKINT Position */
+#define SysTick_CTRL_TICKINT_Msk           (1UL << SysTick_CTRL_TICKINT_Pos)              /*!< SysTick CTRL: TICKINT Mask */
+
+#define SysTick_CTRL_ENABLE_Pos             0U                                            /*!< SysTick CTRL: ENABLE Position */
+#define SysTick_CTRL_ENABLE_Msk            (1UL /*<< SysTick_CTRL_ENABLE_Pos*/)           /*!< SysTick CTRL: ENABLE Mask */
+
+/* SysTick Reload Register Definitions */
+#define SysTick_LOAD_RELOAD_Pos             0U                                            /*!< SysTick LOAD: RELOAD Position */
+#define SysTick_LOAD_RELOAD_Msk            (0xFFFFFFUL /*<< SysTick_LOAD_RELOAD_Pos*/)    /*!< SysTick LOAD: RELOAD Mask */
+
+/* SysTick Current Register Definitions */
+#define SysTick_VAL_CURRENT_Pos             0U                                            /*!< SysTick VAL: CURRENT Position */
+#define SysTick_VAL_CURRENT_Msk            (0xFFFFFFUL /*<< SysTick_VAL_CURRENT_Pos*/)    /*!< SysTick VAL: CURRENT Mask */
+
+/* SysTick Calibration Register Definitions */
+#define SysTick_CALIB_NOREF_Pos            31U                                            /*!< SysTick CALIB: NOREF Position */
+#define SysTick_CALIB_NOREF_Msk            (1UL << SysTick_CALIB_NOREF_Pos)               /*!< SysTick CALIB: NOREF Mask */
+
+#define SysTick_CALIB_SKEW_Pos             30U                                            /*!< SysTick CALIB: SKEW Position */
+#define SysTick_CALIB_SKEW_Msk             (1UL << SysTick_CALIB_SKEW_Pos)                /*!< SysTick CALIB: SKEW Mask */
+
+#define SysTick_CALIB_TENMS_Pos             0U                                            /*!< SysTick CALIB: TENMS Position */
+#define SysTick_CALIB_TENMS_Msk            (0xFFFFFFUL /*<< SysTick_CALIB_TENMS_Pos*/)    /*!< SysTick CALIB: TENMS Mask */
+
+//static inline uint32_t SysTick_Config(uint32_t n_ticks)
+//{
+//	/* constant from systick_set_reload -- as this returns something that's
+//	 * not void, this is the only possible error condition */
+//	if (n_ticks & ~0x00FFFFFF) {
+//		return 1;
+//	}
+//
+//	systick_set_reload(n_ticks);
+//	systick_set_clocksource(true);
+//	systick_interrupt_enable();
+//	systick_counter_enable();
+//
+//	return 0;
+//}
+
+/**
+  \brief   System Tick Configuration
+  \details Initializes the System Timer and its interrupt, and starts the System Tick Timer.
+           Counter is in free running mode to generate periodic interrupts.
+  \param [in]  ticks  Number of ticks between two interrupts.
+  \return          0  Function succeeded.
+  \return          1  Function failed.
+  \note    When the variable <b>__Vendor_SysTickConfig</b> is set to 1, then the
+           function <b>SysTick_Config</b> is not included. In this case, the file <b><i>device</i>.h</b>
+           must contain a vendor-specific implementation of this function.
+ */
+__STATIC_INLINE uint32_t SysTick_Config(uint32_t ticks)
 {
-	/* constant from systick_set_reload -- as this returns something that's
-	 * not void, this is the only possible error condition */
-	if (n_ticks & ~0x00FFFFFF) {
-		return 1;
-	}
+  if ((ticks - 1UL) > SysTick_LOAD_RELOAD_Msk)
+  {
+    return (1UL);                                                   /* Reload value impossible */
+  }
 
-	systick_set_reload(n_ticks);
-	systick_set_clocksource(true);
-	systick_interrupt_enable();
-	systick_counter_enable();
-
-	return 0;
+  SysTick->LOAD  = (uint32_t)(ticks - 1UL);                         /* set reload register */
+  NVIC_SetPriority (SysTick_IRQn, (1UL << __NVIC_PRIO_BITS) - 1UL); /* set Priority for Systick Interrupt */
+  SysTick->VAL   = 0UL;                                             /* Load the SysTick Counter Value */
+  SysTick->CTRL  = SysTick_CTRL_CLKSOURCE_Msk |
+                   SysTick_CTRL_TICKINT_Msk   |
+                   SysTick_CTRL_ENABLE_Msk;                         /* Enable SysTick IRQ and SysTick Timer */
+  return (0UL);                                                     /* Function successful */
 }
 
 /* stubs for efm32tg stk trace.c */
