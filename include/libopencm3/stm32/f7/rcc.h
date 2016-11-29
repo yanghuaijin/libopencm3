@@ -36,6 +36,8 @@
 #ifndef LIBOPENCM3_RCC_H
 #define LIBOPENCM3_RCC_H
 
+#include <libopencmsis/core_cm3.h>
+
 /* --- RCC registers ------------------------------------------------------- */
 
 #define RCC_CR					MMIO32(RCC_BASE + 0x00)
@@ -100,6 +102,41 @@
 #define RCC_PLLCFGR_PLLM_MASK			0x3f
 #define RCC_PLLCFGR_PLLM_SHIFT			0
 
+/********************  Bit definition for RCC_PLLCFGR register  ***************/
+#define  RCC_PLLCFGR_PLLM                    0x0000003FU
+#define  RCC_PLLCFGR_PLLM_0                  0x00000001U
+#define  RCC_PLLCFGR_PLLM_1                  0x00000002U
+#define  RCC_PLLCFGR_PLLM_2                  0x00000004U
+#define  RCC_PLLCFGR_PLLM_3                  0x00000008U
+#define  RCC_PLLCFGR_PLLM_4                  0x00000010U
+#define  RCC_PLLCFGR_PLLM_5                  0x00000020U
+#define  RCC_PLLCFGR_PLLN                    0x00007FC0U
+#define  RCC_PLLCFGR_PLLN_0                  0x00000040U
+#define  RCC_PLLCFGR_PLLN_1                  0x00000080U
+#define  RCC_PLLCFGR_PLLN_2                  0x00000100U
+#define  RCC_PLLCFGR_PLLN_3                  0x00000200U
+#define  RCC_PLLCFGR_PLLN_4                  0x00000400U
+#define  RCC_PLLCFGR_PLLN_5                  0x00000800U
+#define  RCC_PLLCFGR_PLLN_6                  0x00001000U
+#define  RCC_PLLCFGR_PLLN_7                  0x00002000U
+#define  RCC_PLLCFGR_PLLN_8                  0x00004000U
+#define  RCC_PLLCFGR_PLLP                    0x00030000U
+#define  RCC_PLLCFGR_PLLP_0                  0x00010000U
+#define  RCC_PLLCFGR_PLLP_1                  0x00020000U
+//#define  RCC_PLLCFGR_PLLSRC                  0x00400000U
+#define  RCC_PLLCFGR_PLLSRC_HSE              0x00400000U
+#define  RCC_PLLCFGR_PLLSRC_HSI              0x00000000U
+#define  RCC_PLLCFGR_PLLQ                    0x0F000000U
+#define  RCC_PLLCFGR_PLLQ_0                  0x01000000U
+#define  RCC_PLLCFGR_PLLQ_1                  0x02000000U
+#define  RCC_PLLCFGR_PLLQ_2                  0x04000000U
+#define  RCC_PLLCFGR_PLLQ_3                  0x08000000U
+
+#define  RCC_PLLCFGR_PLLR                    0x70000000U
+#define  RCC_PLLCFGR_PLLR_0                  0x10000000U
+#define  RCC_PLLCFGR_PLLR_1                  0x20000000U
+#define  RCC_PLLCFGR_PLLR_2                  0x40000000U
+
 /* --- RCC_CFGR values ----------------------------------------------------- */
 
 /* MCO2: Microcontroller clock output 2 */
@@ -121,7 +158,7 @@
 #define RCC_CFGR_MCOPRE_DIV_5			0x7
 
 /* I2SSRC: I2S clock selection */
-#define RCC_CFGR_I2SSRC				(1 << 23)
+//#define RCC_CFGR_I2SSRC				(1 << 23)
 
 /* MCO1: Microcontroller clock output 1 */
 #define RCC_CFGR_MCO1_MASK			0x3
@@ -164,15 +201,102 @@
 /* SWS: System clock switch status */
 #define RCC_CFGR_SWS_SHIFT			2
 #define RCC_CFGR_SWS_MASK			0x3
-#define RCC_CFGR_SWS_HSI			0x0
-#define RCC_CFGR_SWS_HSE			0x1
-#define RCC_CFGR_SWS_PLL			0x2
+//#define RCC_CFGR_SWS_HSI			0x0
+//#define RCC_CFGR_SWS_HSE			0x1
+//#define RCC_CFGR_SWS_PLL			0x2
 
 /* SW: System clock switch */
 #define RCC_CFGR_SW_SHIFT			0
-#define RCC_CFGR_SW_HSI				0x0
-#define RCC_CFGR_SW_HSE				0x1
-#define RCC_CFGR_SW_PLL				0x2
+//#define RCC_CFGR_SW_HSI				0x0
+//#define RCC_CFGR_SW_HSE				0x1
+//#define RCC_CFGR_SW_PLL				0x2
+
+/********************  Bit definition for RCC_CFGR register  ******************/
+/*!< SW configuration */
+#define  RCC_CFGR_SW                         0x00000003U        /*!< SW[1:0] bits (System clock Switch) */
+#define  RCC_CFGR_SW_0                       0x00000001U        /*!< Bit 0 */
+#define  RCC_CFGR_SW_1                       0x00000002U        /*!< Bit 1 */
+#define  RCC_CFGR_SW_HSI                     0x00000000U        /*!< HSI selected as system clock */
+#define  RCC_CFGR_SW_HSE                     0x00000001U        /*!< HSE selected as system clock */
+#define  RCC_CFGR_SW_PLL                     0x00000002U        /*!< PLL selected as system clock */
+
+/*!< SWS configuration */
+#define  RCC_CFGR_SWS                        0x0000000CU        /*!< SWS[1:0] bits (System Clock Switch Status) */
+#define  RCC_CFGR_SWS_0                      0x00000004U        /*!< Bit 0 */
+#define  RCC_CFGR_SWS_1                      0x00000008U        /*!< Bit 1 */
+#define  RCC_CFGR_SWS_HSI                    0x00000000U        /*!< HSI oscillator used as system clock */
+#define  RCC_CFGR_SWS_HSE                    0x00000004U        /*!< HSE oscillator used as system clock */
+#define  RCC_CFGR_SWS_PLL                    0x00000008U        /*!< PLL used as system clock */
+
+/*!< HPRE configuration */
+#define  RCC_CFGR_HPRE                       0x000000F0U        /*!< HPRE[3:0] bits (AHB prescaler) */
+#define  RCC_CFGR_HPRE_0                     0x00000010U        /*!< Bit 0 */
+#define  RCC_CFGR_HPRE_1                     0x00000020U        /*!< Bit 1 */
+#define  RCC_CFGR_HPRE_2                     0x00000040U        /*!< Bit 2 */
+#define  RCC_CFGR_HPRE_3                     0x00000080U        /*!< Bit 3 */
+
+#define  RCC_CFGR_HPRE_DIV1                  0x00000000U        /*!< SYSCLK not divided */
+#define  RCC_CFGR_HPRE_DIV2                  0x00000080U        /*!< SYSCLK divided by 2 */
+#define  RCC_CFGR_HPRE_DIV4                  0x00000090U        /*!< SYSCLK divided by 4 */
+#define  RCC_CFGR_HPRE_DIV8                  0x000000A0U        /*!< SYSCLK divided by 8 */
+#define  RCC_CFGR_HPRE_DIV16                 0x000000B0U        /*!< SYSCLK divided by 16 */
+#define  RCC_CFGR_HPRE_DIV64                 0x000000C0U        /*!< SYSCLK divided by 64 */
+#define  RCC_CFGR_HPRE_DIV128                0x000000D0U        /*!< SYSCLK divided by 128 */
+#define  RCC_CFGR_HPRE_DIV256                0x000000E0U        /*!< SYSCLK divided by 256 */
+#define  RCC_CFGR_HPRE_DIV512                0x000000F0U        /*!< SYSCLK divided by 512 */
+
+/*!< PPRE1 configuration */
+#define  RCC_CFGR_PPRE1                      0x00001C00U        /*!< PRE1[2:0] bits (APB1 prescaler) */
+#define  RCC_CFGR_PPRE1_0                    0x00000400U        /*!< Bit 0 */
+#define  RCC_CFGR_PPRE1_1                    0x00000800U        /*!< Bit 1 */
+#define  RCC_CFGR_PPRE1_2                    0x00001000U        /*!< Bit 2 */
+
+#define  RCC_CFGR_PPRE1_DIV1                 0x00000000U        /*!< HCLK not divided */
+#define  RCC_CFGR_PPRE1_DIV2                 0x00001000U        /*!< HCLK divided by 2 */
+#define  RCC_CFGR_PPRE1_DIV4                 0x00001400U        /*!< HCLK divided by 4 */
+#define  RCC_CFGR_PPRE1_DIV8                 0x00001800U        /*!< HCLK divided by 8 */
+#define  RCC_CFGR_PPRE1_DIV16                0x00001C00U        /*!< HCLK divided by 16 */
+
+/*!< PPRE2 configuration */
+#define  RCC_CFGR_PPRE2                      0x0000E000U        /*!< PRE2[2:0] bits (APB2 prescaler) */
+#define  RCC_CFGR_PPRE2_0                    0x00002000U        /*!< Bit 0 */
+#define  RCC_CFGR_PPRE2_1                    0x00004000U        /*!< Bit 1 */
+#define  RCC_CFGR_PPRE2_2                    0x00008000U        /*!< Bit 2 */
+
+#define  RCC_CFGR_PPRE2_DIV1                 0x00000000U        /*!< HCLK not divided */
+#define  RCC_CFGR_PPRE2_DIV2                 0x00008000U        /*!< HCLK divided by 2 */
+#define  RCC_CFGR_PPRE2_DIV4                 0x0000A000U        /*!< HCLK divided by 4 */
+#define  RCC_CFGR_PPRE2_DIV8                 0x0000C000U        /*!< HCLK divided by 8 */
+#define  RCC_CFGR_PPRE2_DIV16                0x0000E000U        /*!< HCLK divided by 16 */
+
+/*!< RTCPRE configuration */
+#define  RCC_CFGR_RTCPRE                     0x001F0000U
+#define  RCC_CFGR_RTCPRE_0                   0x00010000U
+#define  RCC_CFGR_RTCPRE_1                   0x00020000U
+#define  RCC_CFGR_RTCPRE_2                   0x00040000U
+#define  RCC_CFGR_RTCPRE_3                   0x00080000U
+#define  RCC_CFGR_RTCPRE_4                   0x00100000U
+
+/*!< MCO1 configuration */
+#define  RCC_CFGR_MCO1                       0x00600000U
+#define  RCC_CFGR_MCO1_0                     0x00200000U
+#define  RCC_CFGR_MCO1_1                     0x00400000U
+
+#define  RCC_CFGR_I2SSRC                     0x00800000U
+
+#define  RCC_CFGR_MCO1PRE                    0x07000000U
+#define  RCC_CFGR_MCO1PRE_0                  0x01000000U
+#define  RCC_CFGR_MCO1PRE_1                  0x02000000U
+#define  RCC_CFGR_MCO1PRE_2                  0x04000000U
+
+#define  RCC_CFGR_MCO2PRE                    0x38000000U
+#define  RCC_CFGR_MCO2PRE_0                  0x08000000U
+#define  RCC_CFGR_MCO2PRE_1                  0x10000000U
+#define  RCC_CFGR_MCO2PRE_2                  0x20000000U
+
+#define  RCC_CFGR_MCO2                       0xC0000000U
+#define  RCC_CFGR_MCO2_0                     0x40000000U
+#define  RCC_CFGR_MCO2_1                     0x80000000U
 
 /* --- RCC_CIR values ------------------------------------------------------ */
 
@@ -622,6 +746,10 @@
 #define RCC_DCKCFGR2_UART1SEL_MASK		0x3
 #define RCC_DCKCFGR2_UART1SEL_SHIFT		0
 
+/**
+  * @brief Reset and Clock Control
+  */
+
 #define _REG_BIT(base, bit)		(((base) << 5) + (bit))
 
 struct rcc_clock_scale {
@@ -929,6 +1057,297 @@ enum rcc_periph_rst {
 	RST_LTDC	= _REG_BIT(0x24, 26),
 };
 
+/** @defgroup RCC_Oscillator_Type Oscillator Type
+  * @{
+  */
+#define RCC_OSCILLATORTYPE_NONE            ((uint32_t)0x00000000U)
+#define RCC_OSCILLATORTYPE_HSE             ((uint32_t)0x00000001U)
+#define RCC_OSCILLATORTYPE_HSI             ((uint32_t)0x00000002U)
+#define RCC_OSCILLATORTYPE_LSE             ((uint32_t)0x00000004U)
+#define RCC_OSCILLATORTYPE_LSI             ((uint32_t)0x00000008U)
+/**
+  * @}
+  */
+
+/** @defgroup RCC_HSE_Config RCC HSE Config
+  * @{
+  */
+#define RCC_HSE_OFF                      ((uint32_t)0x00000000U)
+#define RCC_HSE_ON                       RCC_CR_HSEON
+#define RCC_HSE_BYPASS                   ((uint32_t)(RCC_CR_HSEBYP | RCC_CR_HSEON))
+/**
+  * @}
+  */
+
+/** @defgroup RCC_LSE_Config RCC LSE Config
+  * @{
+  */
+#define RCC_LSE_OFF                    ((uint32_t)0x00000000U)
+#define RCC_LSE_ON                     RCC_BDCR_LSEON
+#define RCC_LSE_BYPASS                 ((uint32_t)(RCC_BDCR_LSEBYP | RCC_BDCR_LSEON))
+/**
+  * @}
+  */
+
+/** @defgroup RCC_HSI_Config RCC HSI Config
+  * @{
+  */
+#define RCC_HSI_OFF                    ((uint32_t)0x00000000U)
+#define RCC_HSI_ON                     RCC_CR_HSION
+
+#define RCC_HSICALIBRATION_DEFAULT     ((uint32_t)0x10U)         /* Default HSI calibration trimming value */
+/**
+  * @}
+  */
+
+/** @defgroup RCC_LSI_Config RCC LSI Config
+  * @{
+  */
+#define RCC_LSI_OFF                    ((uint32_t)0x00000000U)
+#define RCC_LSI_ON                     RCC_CSR_LSION
+/**
+  * @}
+  */
+
+/** @defgroup RCC_PLL_Config RCC PLL Config
+  * @{
+  */
+#define RCC_PLL_NONE                   ((uint32_t)0x00000000U)
+#define RCC_PLL_OFF                    ((uint32_t)0x00000001U)
+#define RCC_PLL_ON                     ((uint32_t)0x00000002U)
+/**
+  * @}
+  */
+
+/** @defgroup RCC_PLLP_Clock_Divider PLLP Clock Divider
+  * @{
+  */
+#define RCC_PLLP_DIV2                  ((uint32_t)0x00000002U)
+#define RCC_PLLP_DIV4                  ((uint32_t)0x00000004U)
+#define RCC_PLLP_DIV6                  ((uint32_t)0x00000006U)
+#define RCC_PLLP_DIV8                  ((uint32_t)0x00000008U)
+/**
+  * @}
+  */
+
+/** @defgroup RCC_PLL_Clock_Source PLL Clock Source
+  * @{
+  */
+#define RCC_PLLSOURCE_HSI                RCC_PLLCFGR_PLLSRC_HSI
+#define RCC_PLLSOURCE_HSE                RCC_PLLCFGR_PLLSRC_HSE
+/**
+  * @}
+  */
+
+/** @defgroup RCC_System_Clock_Type RCC System Clock Type
+  * @{
+  */
+#define RCC_CLOCKTYPE_SYSCLK             ((uint32_t)0x00000001U)
+#define RCC_CLOCKTYPE_HCLK               ((uint32_t)0x00000002U)
+#define RCC_CLOCKTYPE_PCLK1              ((uint32_t)0x00000004U)
+#define RCC_CLOCKTYPE_PCLK2              ((uint32_t)0x00000008U)
+/**
+  * @}
+  */
+
+/** @defgroup RCC_System_Clock_Source RCC System Clock Source
+  * @{
+  */
+#define RCC_SYSCLKSOURCE_HSI             RCC_CFGR_SW_HSI
+#define RCC_SYSCLKSOURCE_HSE             RCC_CFGR_SW_HSE
+#define RCC_SYSCLKSOURCE_PLLCLK          RCC_CFGR_SW_PLL
+/**
+  * @}
+  */
+
+
+/** @defgroup RCC_System_Clock_Source_Status System Clock Source Status
+  * @{
+  */
+#define RCC_SYSCLKSOURCE_STATUS_HSI      RCC_CFGR_SWS_HSI   /*!< HSI used as system clock */
+#define RCC_SYSCLKSOURCE_STATUS_HSE      RCC_CFGR_SWS_HSE   /*!< HSE used as system clock */
+#define RCC_SYSCLKSOURCE_STATUS_PLLCLK   RCC_CFGR_SWS_PLL   /*!< PLL used as system clock */
+/**
+  * @}
+  */
+
+/** @defgroup RCC_AHB_Clock_Source RCC AHB Clock Source
+  * @{
+  */
+#define RCC_SYSCLK_DIV1                  RCC_CFGR_HPRE_DIV1
+#define RCC_SYSCLK_DIV2                  RCC_CFGR_HPRE_DIV2
+#define RCC_SYSCLK_DIV4                  RCC_CFGR_HPRE_DIV4
+#define RCC_SYSCLK_DIV8                  RCC_CFGR_HPRE_DIV8
+#define RCC_SYSCLK_DIV16                 RCC_CFGR_HPRE_DIV16
+#define RCC_SYSCLK_DIV64                 RCC_CFGR_HPRE_DIV64
+#define RCC_SYSCLK_DIV128                RCC_CFGR_HPRE_DIV128
+#define RCC_SYSCLK_DIV256                RCC_CFGR_HPRE_DIV256
+#define RCC_SYSCLK_DIV512                RCC_CFGR_HPRE_DIV512
+/**
+  * @}
+  */
+
+/** @defgroup RCC_APB1_APB2_Clock_Source RCC APB1/APB2 Clock Source
+  * @{
+  */
+#define RCC_HCLK_DIV1                    RCC_CFGR_PPRE1_DIV1
+#define RCC_HCLK_DIV2                    RCC_CFGR_PPRE1_DIV2
+#define RCC_HCLK_DIV4                    RCC_CFGR_PPRE1_DIV4
+#define RCC_HCLK_DIV8                    RCC_CFGR_PPRE1_DIV8
+#define RCC_HCLK_DIV16                   RCC_CFGR_PPRE1_DIV16
+/**
+  * @}
+  */
+
+/** @defgroup RCC_RTC_Clock_Source RCC RTC Clock Source
+  * @{
+  */
+#define RCC_RTCCLKSOURCE_LSE             ((uint32_t)0x00000100U)
+#define RCC_RTCCLKSOURCE_LSI             ((uint32_t)0x00000200U)
+#define RCC_RTCCLKSOURCE_HSE_DIV2        ((uint32_t)0x00020300U)
+#define RCC_RTCCLKSOURCE_HSE_DIV3        ((uint32_t)0x00030300U)
+#define RCC_RTCCLKSOURCE_HSE_DIV4        ((uint32_t)0x00040300U)
+#define RCC_RTCCLKSOURCE_HSE_DIV5        ((uint32_t)0x00050300U)
+#define RCC_RTCCLKSOURCE_HSE_DIV6        ((uint32_t)0x00060300U)
+#define RCC_RTCCLKSOURCE_HSE_DIV7        ((uint32_t)0x00070300U)
+#define RCC_RTCCLKSOURCE_HSE_DIV8        ((uint32_t)0x00080300U)
+#define RCC_RTCCLKSOURCE_HSE_DIV9        ((uint32_t)0x00090300U)
+#define RCC_RTCCLKSOURCE_HSE_DIV10       ((uint32_t)0x000A0300U)
+#define RCC_RTCCLKSOURCE_HSE_DIV11       ((uint32_t)0x000B0300U)
+#define RCC_RTCCLKSOURCE_HSE_DIV12       ((uint32_t)0x000C0300U)
+#define RCC_RTCCLKSOURCE_HSE_DIV13       ((uint32_t)0x000D0300U)
+#define RCC_RTCCLKSOURCE_HSE_DIV14       ((uint32_t)0x000E0300U)
+#define RCC_RTCCLKSOURCE_HSE_DIV15       ((uint32_t)0x000F0300U)
+#define RCC_RTCCLKSOURCE_HSE_DIV16       ((uint32_t)0x00100300U)
+#define RCC_RTCCLKSOURCE_HSE_DIV17       ((uint32_t)0x00110300U)
+#define RCC_RTCCLKSOURCE_HSE_DIV18       ((uint32_t)0x00120300U)
+#define RCC_RTCCLKSOURCE_HSE_DIV19       ((uint32_t)0x00130300U)
+#define RCC_RTCCLKSOURCE_HSE_DIV20       ((uint32_t)0x00140300U)
+#define RCC_RTCCLKSOURCE_HSE_DIV21       ((uint32_t)0x00150300U)
+#define RCC_RTCCLKSOURCE_HSE_DIV22       ((uint32_t)0x00160300U)
+#define RCC_RTCCLKSOURCE_HSE_DIV23       ((uint32_t)0x00170300U)
+#define RCC_RTCCLKSOURCE_HSE_DIV24       ((uint32_t)0x00180300U)
+#define RCC_RTCCLKSOURCE_HSE_DIV25       ((uint32_t)0x00190300U)
+#define RCC_RTCCLKSOURCE_HSE_DIV26       ((uint32_t)0x001A0300U)
+#define RCC_RTCCLKSOURCE_HSE_DIV27       ((uint32_t)0x001B0300U)
+#define RCC_RTCCLKSOURCE_HSE_DIV28       ((uint32_t)0x001C0300U)
+#define RCC_RTCCLKSOURCE_HSE_DIV29       ((uint32_t)0x001D0300U)
+#define RCC_RTCCLKSOURCE_HSE_DIV30       ((uint32_t)0x001E0300U)
+#define RCC_RTCCLKSOURCE_HSE_DIV31       ((uint32_t)0x001F0300U)
+/**
+  * @}
+  */
+
+
+
+/** @defgroup RCC_MCO_Index RCC MCO Index
+  * @{
+  */
+#define RCC_MCO1                         ((uint32_t)0x00000000U)
+#define RCC_MCO2                         ((uint32_t)0x00000001U)
+/**
+  * @}
+  */
+
+/** @defgroup RCC_MCO1_Clock_Source RCC MCO1 Clock Source
+  * @{
+  */
+#define RCC_MCO1SOURCE_HSI               ((uint32_t)0x00000000U)
+#define RCC_MCO1SOURCE_LSE               RCC_CFGR_MCO1_0
+#define RCC_MCO1SOURCE_HSE               RCC_CFGR_MCO1_1
+#define RCC_MCO1SOURCE_PLLCLK            RCC_CFGR_MCO1
+/**
+  * @}
+  */
+
+/** @defgroup RCC_MCO2_Clock_Source RCC MCO2 Clock Source
+  * @{
+  */
+#define RCC_MCO2SOURCE_SYSCLK            ((uint32_t)0x00000000U)
+#define RCC_MCO2SOURCE_PLLI2SCLK         RCC_CFGR_MCO2_0
+#define RCC_MCO2SOURCE_HSE               RCC_CFGR_MCO2_1
+#define RCC_MCO2SOURCE_PLLCLK            RCC_CFGR_MCO2
+/**
+  * @}
+  */
+
+/** @defgroup RCC_MCOx_Clock_Prescaler RCC MCO1 Clock Prescaler
+  * @{
+  */
+#define RCC_MCODIV_1                    ((uint32_t)0x00000000U)
+#define RCC_MCODIV_2                    RCC_CFGR_MCO1PRE_2
+#define RCC_MCODIV_3                    ((uint32_t)RCC_CFGR_MCO1PRE_0 | RCC_CFGR_MCO1PRE_2)
+#define RCC_MCODIV_4                    ((uint32_t)RCC_CFGR_MCO1PRE_1 | RCC_CFGR_MCO1PRE_2)
+#define RCC_MCODIV_5                    RCC_CFGR_MCO1PRE
+/**
+  * @}
+  */
+
+/** @defgroup RCC_Interrupt RCC Interrupt
+  * @{
+  */
+#define RCC_IT_LSIRDY                    ((uint8_t)0x01U)
+#define RCC_IT_LSERDY                    ((uint8_t)0x02U)
+#define RCC_IT_HSIRDY                    ((uint8_t)0x04U)
+#define RCC_IT_HSERDY                    ((uint8_t)0x08U)
+#define RCC_IT_PLLRDY                    ((uint8_t)0x10U)
+#define RCC_IT_PLLI2SRDY                 ((uint8_t)0x20U)
+#define RCC_IT_PLLSAIRDY                 ((uint8_t)0x40U)
+#define RCC_IT_CSS                       ((uint8_t)0x80U)
+/**
+  * @}
+  */
+
+/** @defgroup RCC_Flag RCC Flags
+  *        Elements values convention: 0XXYYYYYb
+  *           - YYYYY  : Flag position in the register
+  *           - 0XX  : Register index
+  *                 - 01: CR register
+  *                 - 10: BDCR register
+  *                 - 11: CSR register
+  * @{
+  */
+/* Flags in the CR register */
+#define RCC_FLAG_HSIRDY                  ((uint8_t)0x21U)
+#define RCC_FLAG_HSERDY                  ((uint8_t)0x31U)
+#define RCC_FLAG_PLLRDY                  ((uint8_t)0x39U)
+#define RCC_FLAG_PLLI2SRDY               ((uint8_t)0x3BU)
+#define RCC_FLAG_PLLSAIRDY               ((uint8_t)0x3CU)
+
+/* Flags in the BDCR register */
+#define RCC_FLAG_LSERDY                  ((uint8_t)0x41U)
+
+/* Flags in the CSR register */
+#define RCC_FLAG_LSIRDY                  ((uint8_t)0x61U)
+#define RCC_FLAG_BORRST                  ((uint8_t)0x79U)
+#define RCC_FLAG_PINRST                  ((uint8_t)0x7AU)
+#define RCC_FLAG_PORRST                  ((uint8_t)0x7BU)
+#define RCC_FLAG_SFTRST                  ((uint8_t)0x7CU)
+#define RCC_FLAG_IWDGRST                 ((uint8_t)0x7DU)
+#define RCC_FLAG_WWDGRST                 ((uint8_t)0x7EU)
+#define RCC_FLAG_LPWRRST                 ((uint8_t)0x7FU)
+/**
+  * @}
+  */
+
+/** @defgroup RCC_LSEDrive_Configuration RCC LSE Drive configurations
+  * @{
+  */
+#define RCC_LSEDRIVE_LOW                 ((uint32_t)0x00000000U)
+#define RCC_LSEDRIVE_MEDIUMLOW           RCC_BDCR_LSEDRV_1
+#define RCC_LSEDRIVE_MEDIUMHIGH          RCC_BDCR_LSEDRV_0
+#define RCC_LSEDRIVE_HIGH                RCC_BDCR_LSEDRV
+
+#if !defined  (HSE_STARTUP_TIMEOUT)
+  #define HSE_STARTUP_TIMEOUT    ((uint32_t)100U)   /*!< Time out for HSE start up, in ms */
+#endif /* HSE_STARTUP_TIMEOUT */
+
+/*!< Uncomment the following line if you need to relocate your vector Table in
+     Internal SRAM. */
+/* #define VECT_TAB_SRAM */
+#define VECT_TAB_OFFSET  0x00 /*!< Vector Table base offset field.
+                                   This value must be a multiple of 0x200. */
+
 #undef _REG_BIT
 
 #include <libopencm3/stm32/common/rcc_common_all.h>
@@ -962,6 +1381,8 @@ void rcc_set_main_pll_hse(uint32_t pllm, uint32_t plln, uint32_t pllp,
 			  uint32_t pllq, uint32_t pllr);
 uint32_t rcc_system_clock_source(void);
 void rcc_clock_setup_hse_3v3(const struct rcc_clock_scale *clock);
+
+void SystemInit(void);
 
 END_DECLS
 
