@@ -28,7 +28,7 @@
 ## --------
 ##
 ## @code
-## DEVICE=stm32f407vgt6
+## DEVICE=stm32f765ii
 ## <... common makefile code ...>
 ## all: images
 ##

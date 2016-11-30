@@ -27,7 +27,7 @@ specified, because the device specific features is usually dependent on the
 last characters of device name string. Note that the device name string search
 is case insensitive.
 
-DEVICE=stm32f407vgt6
+DEVICE=stm32f765iik6
 
 Then, the user includes the file /ld/Makefile.linker exactly after the first
 target (usually all) has been defined.

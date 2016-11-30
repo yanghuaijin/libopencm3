@@ -28,7 +28,7 @@ AR		= $(PREFIX)-ar
 
 # STM32F7 only supports single precision FPU
 FP_FLAGS	?= -mfloat-abi=hard -mfpu=fpv5-sp-d16
-
+#
 TGT_CFLAGS	= -Os -g \
 		  -Wall -Wextra -Wimplicit-function-declaration \
 		  -Wredundant-decls -Wmissing-prototypes -Wstrict-prototypes \
@@ -37,7 +37,7 @@ TGT_CFLAGS	= -Os -g \
 		  -mcpu=cortex-m7 -mthumb $(FP_FLAGS) \
 		  -Wstrict-prototypes \
 		  -ffunction-sections -fdata-sections -MD -DSTM32F7
-
+TGT_CFLAGS      += $(DEBUG_FLAGS)
 ARFLAGS		= rcs
 
 OBJS		= gpio.o gpio_common_all.o rcc.o pwr.o flash.o tick.o
@@ -60,7 +60,7 @@ OBJS += gpio_common_all.o gpio_common_f0234.o flash_common_f234.o flash_common_f
 #OBJS		+= ltdc.o 
 
 VPATH += ../../usb:../:../../cm3:../common
-VPATH += ../../ethernet
+#VPATH += ../../ethernet
 
 ###############################################################################
 # Checking CPU support in the toolchain
@@ -73,15 +73,15 @@ VPATH += ../../ethernet
 #Please use gcc-arm-embedded 4.8 2014q3 or newer. Skipping this sub-library.
 #endef
 #
-#ifneq ($(shell $(CC) --help=target | grep -q '\<cortex-m7\>'; echo $$?),0)
-#  $(warning $(MISSING_CPU))
-#
-#all clean:
-#	@true
-#
-#$(SRCLIBDIR)/$(LIBNAME).a:
-#	@true
-#
-#else
+ifneq ($(shell $(CC) --help=target | grep -q '\<cortex-m7\>'; echo $$?),0)
+  $(warning $(MISSING_CPU))
+
+all clean:
+	@true
+
+$(SRCLIBDIR)/$(LIBNAME).a:
+	@true
+
+else
   include ../../Makefile.include
-#endif
+endif
