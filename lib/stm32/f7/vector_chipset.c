@@ -31,8 +31,8 @@ static void SetSysClock(void);
 static void pre_main(void)
 {
 	SystemInit();
-//	/* Enable access to Floating-Point coprocessor. */
-//	SCB_CPACR |= SCB_CPACR_FULL * (SCB_CPACR_CP10 | SCB_CPACR_CP11);
+	/* Enable access to Floating-Point coprocessor. */
+	SCB_CPACR |= SCB_CPACR_FULL * (SCB_CPACR_CP10 | SCB_CPACR_CP11);
 }
 
 static void SystemInit(void)

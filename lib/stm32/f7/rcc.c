@@ -42,9 +42,9 @@
 #include <libopencm3/stm32/rcc.h>
 #include <libopencm3/stm32/pwr.h>
 #include <libopencm3/stm32/flash.h>
-#include <libopencm3/stm32/f7/rcc.h>
-#include <libopencm3/stm32/f7/memorymap.h>
-#include <libopencm3/stm32/f7/HAL_F7.h>
+//#include <libopencm3/stm32/f7/rcc.h>
+//#include <libopencm3/stm32/f7/memorymap.h>
+//#include <libopencm3/stm32/f7/HAL_F7.h>
 
 #define POSITION_VAL(VAL) (VAL##_SHIFT)
 
